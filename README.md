@@ -24,35 +24,19 @@ This document presents a simplified system architecture for a 🚗 Vehicle Regis
 
 ⚡ Performance: Provide rapid response times for 🔍 queries.
 
-4. 🖥️ System Components
-
-Java Terminal Interface: The user interface will be a simple terminal-based Java application, ensuring ease of use without requiring a graphical environment. (TO BE DECIDED)
-
-Backend Logic: Implemented in Java, the backend logic will handle requests, data processing, and communication with the 📁 database.
-
-📁 Database: The system will use a file-based or lightweight embedded database such as SQLite to store 🚗 vehicle information, 🧑 owner details, and ⚠️ violation records. Database indexing will be used to optimize data retrieval.
-
-6. 🔄 Data Flow
+4.🔄 Data Flow
 
 🚗 Vehicle Registration Process: 🚗 Vehicle owners submit their registration information through the terminal, which is verified and stored in the 📁 database.
 
 ⚠️ Violation Reporting Process: 👮 Law enforcement officers log ⚠️ violations, updating the corresponding 🚗 vehicle record and triggering a 📢 notification to the 🚗 vehicle owner.
 
-7. 🔐 Security Considerations
+5.🔐 Security Considerations
 
 🔒 Data Encryption: All sensitive data, including credentials, will be 🔒 encrypted both during transmission and when stored.
 
 🔑 Role-Based Access Control: Only authorized users, such as 👮 law enforcement officers and 🏛️ government administrators, will have access to specific system functionalities.
 
-
-
-8. 📈 Scalability and Performance Optimization
-
-File Management: Efficient file management practices will be used to handle data growth over time.
-
-🗄️ Caching: Caching mechanisms can be implemented using in-memory data structures in Java to enhance performance for frequently accessed data.
-
-9. 🏁 Conclusion
+6.🏁 Conclusion
 
 The 🚗 Vehicle Registration and ⚠️ Violation Tracking System is designed to provide a simple, secure, and user-friendly solution for managing 🚗 vehicle information and traffic ⚠️ violations. By leveraging lightweight Java-based tools and secure data handling practices, this solution aims to deliver reliable services to its users.
 
