@@ -73,9 +73,6 @@ public class login implements ActionListener {
 
         // Admin button
         JButton adminButton = new JButton("ADMIN");
-        adminButton.setFont(new Font("Serif", Font.BOLD, 18));
-        adminButton.setBackground(Color.WHITE);
-        adminButton.setForeground(Color.BLACK);
         adminButton.setFocusPainted(false);
         adminButton.setFont(new Font("Serif", Font.BOLD, 18));
         adminButton.setBackground(Color.WHITE); // Button background color
@@ -98,39 +95,52 @@ public class login implements ActionListener {
                 adminFrame.setSize(500, 500);
                 adminFrame.setLocationRelativeTo(null);
 
-                // Create new Panel for Admin
-                JPanel adminPanel = new JPanel();
-                adminPanel.setLayout(null);
+                // Create new Panel for Admin with GridBagLayout
+                JPanel adminPanel = new JPanel(new GridBagLayout());
                 adminFrame.add(adminPanel);
 
-                // Adds the User Text
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.insets = new Insets(10, 10, 10, 10); // Add padding between components
+                gbc.fill = GridBagConstraints.HORIZONTAL;
+
+                // Username Label
                 JLabel userLabel = new JLabel("Username");
-                userLabel.setHorizontalAlignment(SwingConstants.LEFT); // Align text to the left
-                userLabel.setBounds(10, 10, 100, 40); // Position it near the left side with some padding
-                adminPanel.add(userLabel);
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.anchor = GridBagConstraints.LINE_END; // Align text to the right
+                adminPanel.add(userLabel, gbc);
 
-                // Add text button for username
-                JTextField userTextField = new JTextField();
-                userTextField.setBounds(100,20,165,25);
-                adminPanel.add(userTextField);
+                // Username Text Field
+                JTextField userTextField = new JTextField(15);
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.anchor = GridBagConstraints.LINE_START; // Align text to the left
+                adminPanel.add(userTextField, gbc);
 
-                // Add Password Text
+                // Password Label
                 JLabel passwordLabel = new JLabel("Password");
-                passwordLabel.setHorizontalAlignment(SwingConstants.LEFT);
-                passwordLabel.setBounds(10, 50, 100, 25);
-                adminPanel.add(passwordLabel);
-                adminFrame.setVisible(true);
+                gbc.gridx = 0;
+                gbc.gridy = 1;
+                gbc.anchor = GridBagConstraints.LINE_END;
+                adminPanel.add(passwordLabel, gbc);
 
-                // Add Password Text Field
-                JTextField passwordTextField = new JTextField();
-                passwordTextField.setBounds(100,50,165,25);
-                adminPanel.add(passwordTextField);
+                // Password Text Field
+                JPasswordField passwordTextField = new JPasswordField(15);
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.anchor = GridBagConstraints.LINE_START;
+                adminPanel.add(passwordTextField, gbc);
 
-                // Add Log In Button
+                // Login Button
                 JButton loginButton = new JButton("LOGIN");
-                loginButton.setBounds(10,80,80,25);
-                adminPanel.add(loginButton);
+                gbc.gridx = 1;
+                gbc.gridy = 2;
+                gbc.anchor = GridBagConstraints.CENTER; // Center the button
+                adminPanel.add(loginButton, gbc);
+
+                adminFrame.setVisible(true);
             }
+
         });
         mainPanel.add(adminButton);
 
