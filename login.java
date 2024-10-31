@@ -117,6 +117,7 @@ public class login implements ActionListener {
                 gbc.anchor = GridBagConstraints.LINE_START; // Align text to the left
                 adminPanel.add(userTextField, gbc);
 
+
                 // Password Label
                 JLabel passwordLabel = new JLabel("Password");
                 gbc.gridx = 0;
@@ -131,13 +132,28 @@ public class login implements ActionListener {
                 gbc.anchor = GridBagConstraints.LINE_START;
                 adminPanel.add(passwordTextField, gbc);
 
+
                 // Login Button
                 JButton loginButton = new JButton("LOGIN");
                 gbc.gridx = 1;
                 gbc.gridy = 2;
                 gbc.anchor = GridBagConstraints.CENTER; // Center the button
                 adminPanel.add(loginButton, gbc);
-
+                loginButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String passwordText = passwordTextField.getText(); // retrieves password text field
+                        String userText = userTextField.getText(); // retrieves username text field
+                        System.out.println("username: " + userText + " password: " + passwordText);
+                        if (userText.equals("yanyan") && passwordText.equals("3211")) {
+                            newFrame.dispose(); adminFrame.dispose();
+                            JFrame AdminFrame = new JFrame("ADMIN");
+                            AdminFrame.setSize(1500, 900);
+                            AdminFrame.setLocationRelativeTo(null);
+                            AdminFrame.setVisible(true);
+                        }
+                    }
+                });
                 adminFrame.setVisible(true);
             }
 
