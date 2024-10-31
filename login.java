@@ -19,18 +19,13 @@ public class login implements ActionListener {
         welcomeFrame.setSize(1500, 900);
         welcomeFrame.setLocationRelativeTo(null);
         welcomeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        welcomeFrame.setLayout(null); // Use null layout for positioning
+        welcomeFrame.setLayout(new BorderLayout()); // Use BorderLayout for structured layout
         welcomeFrame.setResizable(false);
 
         // Create the main background panel with a dark blue color
         JPanel mainPanel = new JPanel();
-        mainPanel.setBounds(0, 0, 1500, 900);
         mainPanel.setBackground(new Color(0x041427)); // Set background color to dark blue
         mainPanel.setLayout(null); // Allows absolute positioning within the panel
-
-        // Add top panel
-        JPanel topPanel = createTopPanel();
-        mainPanel.add(topPanel);
 
         // Centered "LTO TRACKER" text
         JLabel centerText = new JLabel("LTO TRACKER", SwingConstants.CENTER);
@@ -53,11 +48,15 @@ public class login implements ActionListener {
         JButton userButton = createUserButton();
         mainPanel.add(userButton);
 
-        welcomeFrame.add(mainPanel);
+        // Add top panel with logo and title to the top of the main welcome frame
+        JPanel topPanel = createTopPanel();
+        welcomeFrame.add(topPanel, BorderLayout.NORTH);
+        welcomeFrame.add(mainPanel, BorderLayout.CENTER);
+
         welcomeFrame.setVisible(true);
     }
 
-    // Method to create the top panel
+    // Method to create the top panel with logo and title
     private static JPanel createTopPanel() {
         JPanel topPanel = new JPanel();
         topPanel.setPreferredSize(new Dimension(1500, 120));
@@ -190,12 +189,17 @@ public class login implements ActionListener {
 
         // Add top panel to main admin panel
         JPanel topPanel = createTopPanel();
-        topPanel.setBackground(Color.RED); // Ensure top panel has red background
         mainAdminPanel.add(topPanel, BorderLayout.NORTH);
 
         // Add mainAdminPanel to adminDashboardFrame
         adminDashboardFrame.add(mainAdminPanel);
         adminDashboardFrame.setVisible(true);
+
+        JLabel WelcomeLabel = new JLabel("HELLOOOOOO");
+        WelcomeLabel.setFont(new Font("Serif", Font.BOLD, 24));
+        WelcomeLabel.setForeground(Color.WHITE);
+        mainAdminPanel.add(WelcomeLabel);
+
     }
 
     @Override
