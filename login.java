@@ -60,7 +60,7 @@ public class login implements ActionListener {
     // Method to create the top panel
     private static JPanel createTopPanel() {
         JPanel topPanel = new JPanel();
-        topPanel.setBounds(0, 0, 1500, 120);
+        topPanel.setPreferredSize(new Dimension(1500, 120));
         topPanel.setBackground(Color.RED);
         topPanel.setLayout(null);
 
@@ -74,7 +74,7 @@ public class login implements ActionListener {
         JLabel titleLabel = new JLabel("LTO TRACKER");
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        titleLabel.setBounds(120, 30, 200, 50);
+        titleLabel.setBounds(120, 30, 200, 50); // Position to the right of the logo
         topPanel.add(titleLabel);
 
         return topPanel;
@@ -183,10 +183,19 @@ public class login implements ActionListener {
         adminDashboardFrame.setSize(1500, 900);
         adminDashboardFrame.setLocationRelativeTo(null);
         adminDashboardFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        adminDashboardFrame.setVisible(true);
 
-        // Add top panel to main admin frame
-        adminDashboardFrame.add(createTopPanel());
+        // Create main panel with dark blue background
+        JPanel mainAdminPanel = new JPanel(new BorderLayout());
+        mainAdminPanel.setBackground(new Color(0x041427)); // Set background color to dark blue
+
+        // Add top panel to main admin panel
+        JPanel topPanel = createTopPanel();
+        topPanel.setBackground(Color.RED); // Ensure top panel has red background
+        mainAdminPanel.add(topPanel, BorderLayout.NORTH);
+
+        // Add mainAdminPanel to adminDashboardFrame
+        adminDashboardFrame.add(mainAdminPanel);
+        adminDashboardFrame.setVisible(true);
     }
 
     @Override
