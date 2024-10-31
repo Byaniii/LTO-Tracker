@@ -240,8 +240,8 @@ public class login implements ActionListener {
     private static JButton createDashboardButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Serif", Font.BOLD, 24));
-        button.setForeground(Color.WHITE);
-        button.setBackground(new Color(0xD32F2F)); // Red color
+        button.setForeground(Color.BLACK);
+        button.setBackground(new Color(0xDB1111)); // Red color
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40)); // Padding for larger buttons
         button.setPreferredSize(new Dimension(300, 50)); // Set a consistent size for the buttons
