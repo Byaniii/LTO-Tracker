@@ -84,9 +84,7 @@ public class login implements ActionListener {
         JButton adminButton = new JButton("ADMIN");
         adminButton.setFont(new Font("Serif", Font.BOLD, 18));
         adminButton.setBackground(Color.WHITE);
-        adminButton.setForeground(Color.BLACK);
         adminButton.setFocusPainted(false);
-        adminButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         adminButton.setBounds((1500 / 2) - 200, 450, 150, 50); // Place it to the left of center
 
         adminButton.addActionListener(new ActionListener() {
@@ -104,9 +102,7 @@ public class login implements ActionListener {
         JButton userButton = new JButton("USER");
         userButton.setFont(new Font("Serif", Font.BOLD, 18));
         userButton.setBackground(Color.WHITE);
-        userButton.setForeground(Color.BLACK);
         userButton.setFocusPainted(false);
-        userButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         userButton.setBounds((1500 / 2) + 50, 450, 150, 50); // Place it to the right of center
 
         return userButton;
@@ -177,30 +173,84 @@ public class login implements ActionListener {
     }
 
     // Method to create the main admin dashboard frame after successful login
+    // Method to create the main admin dashboard frame after successful login
     private static void createAdminDashboardFrame() {
         adminDashboardFrame = new JFrame("Admin Dashboard");
         adminDashboardFrame.setSize(1500, 900);
         adminDashboardFrame.setLocationRelativeTo(null);
         adminDashboardFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Create main panel with dark blue background
+        // Main panel with a white background
         JPanel mainAdminPanel = new JPanel(new BorderLayout());
-        mainAdminPanel.setBackground(new Color(0x041427)); // Set background color to dark blue
+        mainAdminPanel.setBackground(Color.WHITE);
 
-        // Add top panel to main admin panel
+        // Add the red top panel with logo and title
         JPanel topPanel = createTopPanel();
         mainAdminPanel.add(topPanel, BorderLayout.NORTH);
 
-        // Add mainAdminPanel to adminDashboardFrame
+        // Center panel for the admin content, using BoxLayout for vertical alignment
+        JPanel centerPanel = new JPanel();
+        centerPanel.setBackground(Color.WHITE);
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS)); // Use BoxLayout for vertical stacking
+
+        // "ADMIN PANEL" Title
+        JLabel adminTitle = new JLabel("ADMIN PANEL");
+        adminTitle.setFont(new Font("Serif", Font.BOLD, 32));
+        adminTitle.setForeground(new Color(0xD32F2F)); // Red color
+        adminTitle.setAlignmentX(Component.CENTER_ALIGNMENT); // Center align
+        centerPanel.add(adminTitle);
+        centerPanel.add(Box.createVerticalStrut(20)); // Add vertical spacing
+
+        // Welcome message with user's name
+        JLabel welcomeLabel = new JLabel("Welcome, (user's name)!");
+        welcomeLabel.setFont(new Font("Serif", Font.BOLD, 24));
+        welcomeLabel.setForeground(Color.BLACK);
+        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center align
+        centerPanel.add(welcomeLabel);
+        centerPanel.add(Box.createVerticalStrut(40)); // Add larger vertical spacing before buttons
+
+        // Add "REGISTER VEHICLE" button
+        JButton registerButton = createDashboardButton("REGISTER VEHICLE");
+        centerPanel.add(registerButton);
+        centerPanel.add(Box.createVerticalStrut(20)); // Add vertical spacing
+
+        // Add "FIND VEHICLE" button
+        JButton findButton = createDashboardButton("FIND VEHICLE");
+        centerPanel.add(findButton);
+        centerPanel.add(Box.createVerticalStrut(20)); // Add vertical spacing
+
+        // Add "VIOLATION" button
+        JButton violationButton = createDashboardButton("VIOLATION");
+        centerPanel.add(violationButton);
+
+        // Center-align buttons
+        registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        findButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        violationButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add the center panel to main admin panel
+        mainAdminPanel.add(centerPanel, BorderLayout.CENTER);
+
+        // Add the main admin panel to the frame
         adminDashboardFrame.add(mainAdminPanel);
         adminDashboardFrame.setVisible(true);
-
-        JLabel WelcomeLabel = new JLabel("HELLOOOOOO");
-        WelcomeLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        WelcomeLabel.setForeground(Color.WHITE);
-        mainAdminPanel.add(WelcomeLabel);
-
     }
+
+    // Helper method to create styled buttons
+    private static JButton createDashboardButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Serif", Font.BOLD, 24));
+        button.setForeground(Color.WHITE);
+        button.setBackground(new Color(0xD32F2F)); // Red color
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40)); // Padding for larger buttons
+        button.setPreferredSize(new Dimension(300, 50)); // Set a consistent size for the buttons
+        return button;
+    }
+
+
+
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
