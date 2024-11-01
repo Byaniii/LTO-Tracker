@@ -9,6 +9,8 @@ public class login implements ActionListener {
     private static JFrame welcomeFrame;
     private static JFrame loginFrame;
     private static JFrame adminDashboardFrame;
+    private static JButton resetButton; // reset button
+    private static JLabel errorLabel; //added para sa error message
 
     public static void main(String[] args) {
         createWelcomeFrame();
@@ -155,20 +157,43 @@ public class login implements ActionListener {
         gbc.anchor = GridBagConstraints.CENTER;
         loginPanel.add(loginButton, gbc);
 
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = userTextField.getText();
-                String password = new String(passwordTextField.getPassword());
 
-                // Validate credentials
-                if (username.equals("yanyan") && password.equals("3211")) {
-                    welcomeFrame.dispose();
-                    loginFrame.dispose();
-                    createAdminDashboardFrame();
-                }
+        //reset
+        resetButton = new JButton("RESET");
+        gbc.gridx = 0;
+        loginPanel.add(resetButton, gbc);
+
+        //error labels
+        errorLabel = new JLabel();
+        errorLabel.setForeground(Color.red);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        loginPanel.add(errorLabel, gbc);
+
+        //reconstruct loginbutton para sa validation
+        loginButton.addActionListener(e -> {
+            String username = userTextField.getText();
+            String password = new String(passwordTextField.getPassword());
+
+            if (username.isEmpty() || password.isEmpty()) {
+                errorLabel.setText("Please enter both fields.");
+            } else if (username.equals("yanyan") && password.equals("3211")) {
+                welcomeFrame.dispose();
+                loginFrame.dispose();
+                createAdminDashboardFrame();
+            } else {
+                errorLabel.setText("Incorrect username or password.");
             }
         });
+
+        //reset button para mawala mga text sa fields and error message
+        resetButton.addActionListener(e -> {
+            userTextField.setText("");
+            passwordTextField.setText("");
+            errorLabel.setText("");
+        });
+
+                
 
         loginFrame.setVisible(true);
     }
