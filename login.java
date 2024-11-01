@@ -257,8 +257,8 @@ public class login implements ActionListener {
         // This can be used for general ActionListener logic if needed
     }
 
-
-    public void MakeChanges() {
+    public void hi() {
         
     }
+ 
 }
