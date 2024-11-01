@@ -256,4 +256,9 @@ public class login implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // This can be used for general ActionListener logic if needed
     }
+
+
+    public void MakeChanges() {
+        
+    }
 }
