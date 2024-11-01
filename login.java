@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -83,7 +84,7 @@ public class login implements ActionListener {
     private static JButton createAdminButton() {
         JButton adminButton = new JButton("ADMIN");
         adminButton.setFont(new Font("Serif", Font.BOLD, 18));
-        adminButton.setBackground(Color.WHITE);
+        adminButton.setBackground(Color.BLACK);
         adminButton.setFocusPainted(false);
         adminButton.setBounds((1500 / 2) - 200, 450, 150, 50); // Place it to the left of center
 
@@ -173,7 +174,6 @@ public class login implements ActionListener {
     }
 
     // Method to create the main admin dashboard frame after successful login
-    // Method to create the main admin dashboard frame after successful login
     private static void createAdminDashboardFrame() {
         adminDashboardFrame = new JFrame("Admin Dashboard");
         adminDashboardFrame.setSize(1500, 900);
@@ -207,7 +207,7 @@ public class login implements ActionListener {
         welcomeLabel.setForeground(Color.BLACK);
         welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center align
         centerPanel.add(welcomeLabel);
-        centerPanel.add(Box.createVerticalStrut(40)); // Add larger vertical spacing before buttons
+        centerPanel.add(Box.createVerticalStrut(60)); // Increase vertical spacing before buttons
 
         // Add "REGISTER VEHICLE" button
         JButton registerButton = createDashboardButton("REGISTER VEHICLE");
@@ -241,12 +241,12 @@ public class login implements ActionListener {
         JButton button = new JButton(text);
         button.setFont(new Font("Serif", Font.BOLD, 24));
         button.setForeground(Color.BLACK);
-        button.setBackground(new Color(0xDB1111)); // Red color
+        button.setBackground(Color.RED); // White background
         button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40)); // Padding for larger buttons
         button.setPreferredSize(new Dimension(300, 50)); // Set a consistent size for the buttons
         return button;
     }
+
 
 
 
