@@ -259,6 +259,14 @@ public class login implements ActionListener {
         JButton findButton = createDashboardButton("FIND VEHICLE");
         centerPanel.add(findButton);
         centerPanel.add(Box.createVerticalStrut(20)); // Add vertical spacing
+        findButton.addActionListener(e -> {
+            //add function to open find vehicle dashboard
+            JFrame findVehicleFrame = new JFrame("Find Vehicle");
+            findVehicleFrame.setSize(1500, 900);
+            findVehicleFrame.setLocationRelativeTo(null);
+            findVehicleFrame.setVisible(true);
+            
+        });
 
         // Add "VIOLATION" button
         JButton violationButton = createDashboardButton("VIOLATION");
