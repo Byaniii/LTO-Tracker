@@ -3,9 +3,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//PULL
-public class login implements ActionListener {
 
+
+public class login implements ActionListener {  
     private static JFrame welcomeFrame;
     private static JFrame loginFrame;
     private static JFrame adminDashboardFrame;
@@ -136,7 +136,7 @@ public class login implements ActionListener {
         JLabel userLabel = new JLabel("Username");
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.anchor = GridBagConstraints.LINE_START;
         loginPanel.add(userLabel, gbc);
 
         JTextField userTextField = new JTextField(15);
@@ -251,7 +251,7 @@ public class login implements ActionListener {
         centerPanel.add(Box.createVerticalStrut(20)); // Add vertical spacing
         registerButton.addActionListener(e -> {
 
-            RegisterVehicleDashboard();
+            RegisterVehicleDashboard.createRegisterVehicleFrame();
 
         });
 
@@ -286,23 +286,36 @@ public class login implements ActionListener {
     }
 
 
-    private static void RegisterVehicleDashboard() {
+   
+
+    public class RegisterVehicleDashboard {
+    //Gagamitin to para sa encapsulation.
+    private static JTextField VehicleOwner_Field;
+    private static JTextField Address_Field;
+    private static JTextField ContactInformation_Field;
+    private static JTextField IdentificationNumber_Field;
+
+
+
+    //Start ng GUI for Register Vehicle
+    public static void createRegisterVehicleFrame() {
         JFrame registerFrame = new JFrame("Register Vehicle");
-        registerFrame.dispose();
-        JPanel mainPanel = new JPanel();
-        mainPanel.setBackground(Color.white);
-        mainPanel.setLayout(null);
         registerFrame.setSize(1500, 900);
         registerFrame.setLocationRelativeTo(null);
         registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBackground(Color.white);
+        mainPanel.setLayout(null);
         registerFrame.add(mainPanel);
 
-        JPanel topPanel = createTopPanel();
+        //Accessing top panel sa login class
+        JPanel topPanel = login.createTopPanel();
         registerFrame.add(topPanel, BorderLayout.NORTH);
         registerFrame.add(mainPanel, BorderLayout.CENTER);
 
         JLabel titleLabel = new JLabel("Vehicle Registration");
-        titleLabel.setFont(new Font("Sefif", Font.BOLD, 32));
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 32));
         titleLabel.setBounds(600, 50, 400, 40);
         mainPanel.add(titleLabel);
 
@@ -312,17 +325,17 @@ public class login implements ActionListener {
         mainPanel.add(VehicleOwner_Label);
 
         JTextField VehicleOwner_Field = new JTextField();
-        VehicleOwner_Field.setBounds(200, 140, 420, 40); //Label Y + 30 lagi sa field
+        VehicleOwner_Field.setBounds(200, 140, 420, 40);
         VehicleOwner_Field.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         mainPanel.add(VehicleOwner_Field);
 
         JLabel Address_Label = new JLabel("Address");
         Address_Label.setFont(new Font("Serif", Font.PLAIN, 24));
-        Address_Label.setBounds(200, 190, 300, 30); // Label Y + 80 Pixels
+        Address_Label.setBounds(200, 190, 300, 30);
         mainPanel.add(Address_Label);
 
         JTextField Address_Field = new JTextField();
-        Address_Field.setBounds(200, 220, 420, 40); // Label Y + 30
+        Address_Field.setBounds(200, 220, 420, 40);
         Address_Field.setBorder(BorderFactory.createLineBorder(Color.black));
         mainPanel.add(Address_Field);
 
@@ -366,7 +379,6 @@ public class login implements ActionListener {
         NextButton.setBounds(1200, 520, 150, 50);
         mainPanel.add(NextButton);
 
-
         NextButton.addActionListener(e -> {
             String VehicleOwner = VehicleOwner_Field.getText();
             String Address = Address_Field.getText();
@@ -374,30 +386,39 @@ public class login implements ActionListener {
             String IdentificationNumber = IdentificationNumber_Field.getText();
             String DateOfBirth = DateOfBirth_Field.getText();
 
-            //validation para sa mga fields
             if (VehicleOwner.isEmpty() || Address.isEmpty() || ContactInformation.isEmpty()
                     || IdentificationNumber.isEmpty() || DateOfBirth.isEmpty()) {
-
-                //error message if may kulang sa fields or input ng user.
                 JOptionPane optionPane = new JOptionPane("Please fill out all the fields.", JOptionPane.ERROR_MESSAGE);
                 JDialog dialog = optionPane.createDialog("Error");
                 dialog.setSize(500, 180);
                 dialog.setVisible(true);
             } else {
+                
+                RegisterVehicleData registerVehicleData = new RegisterVehicleData(VehicleOwner, Address,
+                        ContactInformation, IdentificationNumber, DateOfBirth);
 
-                /* mag add pa dito ng function para masave yung input sa database.
-                Example: saveVehicleRegistration(VehicleOwner, Address, ContactInformation, IdentificationNumber, DateOfBirth);
+                //Test if nastore yung input sa text fields. Makikita sa terminal
+                System.out.println("Vehicle Owner: " + registerVehicleData.getVehicleOwner());
+                System.out.println("Address: " + registerVehicleData.getAddress());
+                System.out.println("Contact Information: " + registerVehicleData.getContactInformation());
+                System.out.println("Identification Number: " + registerVehicleData.getIdentificationNumber());
+                registerFrame.dispose();
+                
 
-                ---> New window ulit para sa next part ng registration. */
 
             }
         });
-        registerFrame.setVisible(true);
 
+        registerFrame.setVisible(true);
     }
 
+    
 
 
+
+
+   
+}
     private static JButton createDashboardButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Serif", Font.BOLD, 24));
