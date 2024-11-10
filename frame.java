@@ -5,23 +5,21 @@ import java.awt.Font;
 import javax.swing.*;
 
 public class frame extends JFrame {
+    private JPanel bodyPanel; // Declare bodyPanel as an instance variable
 
-    public static void main(String[] args) {
-        frame frame1 = new frame();
-        frame1.CreateFrame();
+    // Constructor to initialize the frame
+    public frame(String title) {
+        setTitle(title);
+        setSize(1500, 900);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        add(createTopPanel(), BorderLayout.NORTH);
+        bodyPanel = createBodyPanel(); // Initialize and store the body panel
+        add(bodyPanel, BorderLayout.CENTER);
+        setVisible(true);
     }
 
-    public void CreateFrame() {
-        JFrame frame = new JFrame("LTO Tracker");
-        frame.setSize(1500, 900);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(createTopPanel(), BorderLayout.NORTH);
-        frame.add(createBodyPanel(), BorderLayout.CENTER);
-        frame.setVisible(true);
-    }
-
-    private static JPanel createTopPanel() {
+    private JPanel createTopPanel() {
         JPanel topPanel = new JPanel();
         topPanel.setPreferredSize(new Dimension(1500, 120));
         topPanel.setBackground(Color.RED);
@@ -43,18 +41,22 @@ public class frame extends JFrame {
         return topPanel;
     }
 
-    private static JPanel createBodyPanel() {
-        JPanel bodyPanel = new JPanel();
+    private JPanel createBodyPanel() {
+        bodyPanel = new JPanel(); // Use `bodyPanel` instance variable
         bodyPanel.setPreferredSize(new Dimension(1500, 780));
         bodyPanel.setBackground(new Color(0x041427));
         bodyPanel.setLayout(null);
 
-        // Create and add the "ADMIN" button
-        CustomButton adminButton = CustomButton.createButton("ADMIN", 400, 450, 300, 80);
-        bodyPanel.add(adminButton);
-
-        CustomButton userButton = CustomButton.createButton("USER", 800, 450, 300, 80);
-        bodyPanel.add(userButton);
         return bodyPanel;
+    }
+
+    // Method to add a button to the body panel without specifying actions
+    public CustomButton addButtonToBodyPanel(String text, int x, int y, int width, int height) {
+        CustomButton customButton = new CustomButton(text);
+        customButton.setBounds(x, y, width, height);
+        bodyPanel.add(customButton); // Add the button to the existing body panel
+        bodyPanel.revalidate(); // Refresh the panel to show the new button
+        bodyPanel.repaint(); // Repaint the panel to update the UI
+        return customButton; // Return the button so actions can be added externally
     }
 }
