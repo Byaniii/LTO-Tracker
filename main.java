@@ -20,6 +20,7 @@ public class main {
 
         AdminButton.addActionListener(e -> {
             frame loginFrame = new frame("Login");
+
         });
     }
 }
