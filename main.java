@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class main {
     public static void main(String[] args) {
@@ -11,11 +9,17 @@ public class main {
         CustomButton userButton = newFrame.addButtonToBodyPanel("USER", 400, 450, 300, 80);
 
         // Add an ActionListener to the button to define the action when it's clicked
-        userButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        userButton.addActionListener(e -> {
+            // Create a new frame for the login page
+            frame loginFrame = new frame("Login");
 
-            }
+        });
+
+        // Add the "ADMIN" button and specify its action
+        CustomButton AdminButton = newFrame.addButtonToBodyPanel("ADMIN", 800, 450, 300, 80);
+
+        AdminButton.addActionListener(e -> {
+            frame loginFrame = new frame("Login");
         });
     }
 }
