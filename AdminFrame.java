@@ -64,7 +64,7 @@ public class AdminFrame extends frame {
         nextButton.setBackground(Color.red);
         nextButton.setForeground(Color.white);
         nextButton.setBorder(null);
-        bodyPanel.add(nextButton);
+        bodyPanel.add(nextButton); //
 
 
     }

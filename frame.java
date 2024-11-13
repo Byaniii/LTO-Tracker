@@ -16,7 +16,7 @@ public class frame extends JFrame {
         add(createTopPanel(), BorderLayout.NORTH);
         bodyPanel = createBodyPanel(); // Initialize and store the body panel
         add(bodyPanel, BorderLayout.CENTER);
-        setVisible(true);
+        setVisible(true);//
     }
 
     private JPanel createTopPanel() {

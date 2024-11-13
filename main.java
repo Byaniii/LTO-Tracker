@@ -5,7 +5,7 @@ public class main {
 
         CustomButton adminButton = newFrame.addButtonToBodyPanel("ADMIN", 400, 450, 300, 80);
         adminButton.addActionListener(e -> {
-            AdminFrame useFrame = new AdminFrame();  // ---    
+            AdminFrame useFrame = new AdminFrame();  
         });
 
 
