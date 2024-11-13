@@ -5,7 +5,7 @@ import java.awt.Font;
 import javax.swing.*;
 
 public class frame extends JFrame {
-    private JPanel bodyPanel; // Declare bodyPanel as an instance variable
+    public JPanel bodyPanel; // Declare bodyPanel as an instance variable
 
     // Constructor to initialize the frame
     public frame(String title) {
