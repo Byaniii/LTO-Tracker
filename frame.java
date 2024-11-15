@@ -5,7 +5,7 @@ import java.awt.Font;
 import javax.swing.*;
 
 public class frame extends JFrame {
-    private JPanel bodyPanel; // Declare bodyPanel as an instance variable
+    public JPanel bodyPanel; // Declare bodyPanel as an instance variable
 
     // Constructor to initialize the frame
     public frame(String title) {
@@ -16,7 +16,7 @@ public class frame extends JFrame {
         add(createTopPanel(), BorderLayout.NORTH);
         bodyPanel = createBodyPanel(); // Initialize and store the body panel
         add(bodyPanel, BorderLayout.CENTER);
-        setVisible(true);
+        setVisible(true);//
     }
 
     private JPanel createTopPanel() {
