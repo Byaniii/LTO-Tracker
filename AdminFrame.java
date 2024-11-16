@@ -15,7 +15,7 @@ public class AdminFrame extends frame {
         bodyPanel.add(titleLabel);
 
 
-        JLabel VehicleOwner_Label = new JLabel("Name of Vehicle Owner");
+        JLabel VehicleOwner_Label = new JLabel( "Name of Vehicle Owner");
         VehicleOwner_Label.setFont(new Font("Serif", Font.PLAIN, 24));
         VehicleOwner_Label.setBounds(200, 110, 300, 30);
         bodyPanel.add(VehicleOwner_Label);

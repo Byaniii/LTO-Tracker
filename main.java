@@ -2,6 +2,8 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -12,7 +14,7 @@ public class main {
         frame newFrame = new frame("LTO Tracker");
 
         // Resize LOGO
-        ImageIcon Icon = new ImageIcon("eto.png");
+        ImageIcon Icon = new ImageIcon("logo.png");
         Image resizedImage = Icon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(resizedImage);
 
@@ -42,9 +44,10 @@ public class main {
 
         CustomButton userButton = newFrame.addButtonToBodyPanel("USER", 800, 450, 300, 80);
         userButton.addActionListener(e -> {
+            AdminLogin();
         });
     }
-    
+
     private static void AdminLogin() {
         frame newFrame = new frame("Login");
         newFrame.bodyPanel.setBackground(Color.white);
@@ -82,5 +85,12 @@ public class main {
         Login_Button.setFont(new Font("Arial", Font.BOLD,20));
         Login_Button.setBackground(Color.red);
         Login_Button.setBorder(null);
+
+        Login_Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newFrame.dispose();
+            }
+        });
     }
 }

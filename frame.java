@@ -26,7 +26,7 @@ public class frame extends JFrame {
         topPanel.setLayout(null);
 
         // Load and add the top-left logo to the top panel
-        ImageIcon topLeftLogo = new ImageIcon("eto.png");
+        ImageIcon topLeftLogo = new ImageIcon("logo.png");
         JLabel logoLabel = new JLabel(topLeftLogo);
         logoLabel.setBounds(10, 10, topLeftLogo.getIconWidth(), topLeftLogo.getIconHeight());
         topPanel.add(logoLabel);
