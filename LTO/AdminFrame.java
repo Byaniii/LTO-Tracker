@@ -1,7 +1,9 @@
 package LTO;
 
 import java.awt.*;
-import javax.swing.JLabel;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.*;
 
 public class AdminFrame extends frame {
     public AdminFrame() {
@@ -35,15 +37,20 @@ public class AdminFrame extends frame {
         CustomButton Violation = CustomButton.createRedButton("VIOLATION", 532, 414, 400, 63, 25);
         bodyPanel.add(Violation);
 
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
     }
 
     private void Register() {
         bodyPanel.removeAll();
+
+        // Title Label
         JLabel titleLabel = new JLabel("Vehicle Registration");
         titleLabel.setFont(new Font("Serif", Font.BOLD, 32));
         titleLabel.setBounds(600, 50, 400, 40);
         bodyPanel.add(titleLabel);
 
+        // Labels and Text Fields for Vehicle Registration
         JLabel VehicleOwner_Label = new JLabel("Name of Vehicle Owner");
         VehicleOwner_Label.setFont(new Font("Serif", Font.PLAIN, 24));
         VehicleOwner_Label.setBounds(200, 110, 300, 30);
@@ -84,11 +91,51 @@ public class AdminFrame extends frame {
         CustomTextField DateOfBirth_Field = CustomTextField.createTextField(200, 460, 420, 40);
         bodyPanel.add(DateOfBirth_Field);
 
-        CustomButton nextButton = CustomButton.createButton("NEXT", 1200, 570, 150, 50);
-        nextButton.setBackground(Color.red);
-        nextButton.setForeground(Color.white);
-        nextButton.setBorder(null);
-        bodyPanel.add(nextButton); //
+        // "Next" Button
+        CustomButton nextButton = CustomButton.createRedButton("NEXT", 1200, 570, 150, 50, 25);
+        bodyPanel.add(nextButton);
+
+        // Action Listener for the "Next" Button
+        nextButton.addActionListener(e -> {
+            // Check if any fields are empty
+            if (VehicleOwner_Field.getText().isEmpty() ||
+                    Address_Field.getText().isEmpty() ||
+                    ContactInformation_Field.getText().isEmpty() ||
+                    IdentificationNumber_Field.getText().isEmpty() ||
+                    DateOfBirth_Field.getText().isEmpty()) {
+
+                // Show a dialog if any field is empty
+                JOptionPane.showMessageDialog(this, "All fields must not be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Collect data and save it
+                String vehicleOwner = VehicleOwner_Field.getText();
+                String address = Address_Field.getText();
+                String contactInformation = ContactInformation_Field.getText();
+                String identificationNumber = IdentificationNumber_Field.getText();
+                String dateOfBirth = DateOfBirth_Field.getText();
+
+                // Store data in a list
+                List<String> data = new ArrayList<>();
+                data.add("Name of Vehicle Owner: " + vehicleOwner);
+                data.add("Address: " + address);
+                data.add("Contact Information: " + contactInformation);
+                data.add("Identification Number: " + identificationNumber);
+                data.add("Date of Birth: " + dateOfBirth);
+
+                // Save the data using FileHandler
+                FileHandler.saveData(data);
+                JOptionPane.showMessageDialog(this, "Vehicle registration data saved successfully!");
+
+                // Optionally, clear the fields after saving
+                VehicleOwner_Field.setText("");
+                Address_Field.setText("");
+                ContactInformation_Field.setText("");
+                IdentificationNumber_Field.setText("");
+                DateOfBirth_Field.setText("");
+            }
+        });
+
+        // Refresh the panel
         bodyPanel.revalidate();
         bodyPanel.repaint();
     }
