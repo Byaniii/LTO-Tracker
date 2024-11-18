@@ -13,6 +13,8 @@ public class AdminFrame extends frame {
     }
 
     public void adminPanel() {
+        bodyPanel.removeAll(); // Clear the panel
+
         JLabel Admin_Label = new JLabel("ADMIN PANEL");
         Admin_Label.setBounds(643, 48, 500, 36);
         Admin_Label.setFont(new Font("Serif", Font.BOLD, 25));
@@ -27,9 +29,7 @@ public class AdminFrame extends frame {
         CustomButton RegisterVehicle = CustomButton.createRedButton("REGISTER VEHICLE", 532, 222, 400, 63, 25);
         bodyPanel.add(RegisterVehicle);
 
-        RegisterVehicle.addActionListener(e -> {
-            Register();
-        });
+        RegisterVehicle.addActionListener(e -> Register());
 
         CustomButton FindVehicle = CustomButton.createRedButton("FIND VEHICLE", 532, 318, 400, 63, 25);
         bodyPanel.add(FindVehicle);
@@ -42,7 +42,8 @@ public class AdminFrame extends frame {
     }
 
     private void Register() {
-        bodyPanel.removeAll();
+        bodyPanel.removeAll(); // Clear the panel
+
         JLabel titleLabel = new JLabel("Vehicle Registration");
         titleLabel.setFont(new Font("Serif", Font.BOLD, 32));
         titleLabel.setBounds(600, 50, 400, 40);
@@ -116,12 +117,18 @@ public class AdminFrame extends frame {
             }
         });
         bodyPanel.add(nextButton);
+
+        // Add a "Back" button
+        CustomButton backButton = CustomButton.createRedButton("BACK", 50, 570, 150, 50, 30);
+        backButton.addActionListener(e -> adminPanel()); // Go back to the admin panel
+        bodyPanel.add(backButton);
+
         bodyPanel.revalidate();
         bodyPanel.repaint();
     }
 
     private void Register_Next() {
-        bodyPanel.removeAll();
+        bodyPanel.removeAll(); // Clear the panel
 
         JLabel titleLabel = new JLabel("Vehicle Registration");
         titleLabel.setFont(new Font("Serif", Font.BOLD, 32));
@@ -227,26 +234,44 @@ public class AdminFrame extends frame {
 
         CustomButton finishButton = CustomButton.createRedButton("FINISH", 1195, 604, 150, 50, 24);
         finishButton.addActionListener(e -> {
-            // Collect data from the second part and save
-            List<String> data = new ArrayList<>();
-            data.add("Vehicle Identification Number: " + VehicleIdentificationNumber_Field.getText());
-            data.add("Registration Number: " + RegistrationNumber_Field.getText());
-            data.add("Make and Model: " + MakeAndModel_Field.getText());
-            data.add("Body Type: " + BodyType_Field.getText());
-            data.add("Color: " + Color_Field.getText());
-            data.add("Weight: " + Weight_Field.getText());
-            data.add("Insurance Provider: " + InsuranceProvider_Field.getText());
-            data.add("Insurance Validity Period: " + InsuranceValidityPeriod_Field.getText());
-            data.add("Policy Number: " + PolicyNumber_Field.getText());
-            data.add("Vehicle Type: " + VehicleType_Field.getText());
-            data.add("Brand: " + Brand_Field.getText());
-            data.add("Dimensions: " + Dimensions_Field.getText());
+            // Check if any fields are empty
+            if (VehicleIdentificationNumber_Field.getText().isEmpty() || RegistrationNumber_Field.getText().isEmpty() ||
+                    MakeAndModel_Field.getText().isEmpty() || BodyType_Field.getText().isEmpty() ||
+                    Color_Field.getText().isEmpty() || Weight_Field.getText().isEmpty() ||
+                    InsuranceProvider_Field.getText().isEmpty() || InsuranceValidityPeriod_Field.getText().isEmpty() ||
+                    PolicyNumber_Field.getText().isEmpty() || VehicleType_Field.getText().isEmpty() ||
+                    Brand_Field.getText().isEmpty() || Dimensions_Field.getText().isEmpty()) {
 
-            // Save the data using FileHandler
-            FileHandler.saveData(data);
-            JOptionPane.showMessageDialog(this, "All vehicle data saved successfully!");
+                // Show a dialog if any field is empty
+                JOptionPane.showMessageDialog(this, "All fields must not be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Collect data from text fields
+                List<String> data = new ArrayList<>();
+                data.add("Vehicle Identification Number: " + VehicleIdentificationNumber_Field.getText());
+                data.add("Registration Number: " + RegistrationNumber_Field.getText());
+                data.add("Make and Model: " + MakeAndModel_Field.getText());
+                data.add("Body Type: " + BodyType_Field.getText());
+                data.add("Color: " + Color_Field.getText());
+                data.add("Weight: " + Weight_Field.getText());
+                data.add("Insurance Provider: " + InsuranceProvider_Field.getText());
+                data.add("Insurance Validity Period: " + InsuranceValidityPeriod_Field.getText());
+                data.add("Policy Number: " + PolicyNumber_Field.getText());
+                data.add("Vehicle Type: " + VehicleType_Field.getText());
+                data.add("Brand: " + Brand_Field.getText());
+                data.add("Dimensions: " + Dimensions_Field.getText());
+
+                // Save the data using FileHandler
+                FileHandler.saveData(data);
+                JOptionPane.showMessageDialog(this, "All vehicle data saved successfully!");
+                adminPanel(); // Return to the admin panel after saving
+            }
         });
         bodyPanel.add(finishButton);
+
+        // Add a "Back" button
+        CustomButton backButton = CustomButton.createRedButton("BACK", 50, 604, 150, 50, 24);
+        backButton.addActionListener(e -> Register()); // Go back to the first part of the registration form
+        bodyPanel.add(backButton);
 
         bodyPanel.revalidate();
         bodyPanel.repaint();
