@@ -1,6 +1,8 @@
 package LTO;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class UserFrame extends JFrame {
@@ -15,11 +17,11 @@ public class UserFrame extends JFrame {
         // Top panel with title
         JPanel topPanel = new JPanel();
         topPanel.setBackground(Color.RED);
-        topPanel.setPreferredSize(new Dimension(1500, 100));
+        topPanel.setPreferredSize(new Dimension(1500, 110));
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         // Logo and title
-        ImageIcon icon = new ImageIcon("logo.png");
+        ImageIcon icon = new ImageIcon("LTO/logo.png");
         JLabel logoLabel = new JLabel(icon);
         topPanel.add(logoLabel);
 
@@ -48,6 +50,7 @@ public class UserFrame extends JFrame {
         String[] buttonTexts = {"VIEW PROFILE", "VIEW VIOLATIONS", "VIEW VEHICLE PROFILE"};
         for (String text : buttonTexts) {
             JButton button = createButton(text);
+            button.addActionListener(new ButtonClickListener(text)); // Add action listener
             bodyPanel.add(button);
             bodyPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Add more spacing between buttons
         }
@@ -66,5 +69,36 @@ public class UserFrame extends JFrame {
         button.setFocusPainted(false);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         return button;
+    }
+
+    // Inner class to handle button clicks
+    // Inner class to handle button clicks
+    private class ButtonClickListener implements ActionListener {
+        private String buttonText;
+
+        public ButtonClickListener(String buttonText) {
+            this.buttonText = buttonText;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch (buttonText) {
+                case "VIEW PROFILE":
+                    dispose();
+                    new ViewProfile(); // Open the ViewProfile frame
+                    break;
+                case "VIEW VIOLATIONS":
+                    dispose();
+                    new ViewViolations(); // Open the ViewViolations frame
+                    break;
+                case "VIEW VEHICLE PROFILE":
+                    dispose();
+                    new ViewVehicleProfile(); // Open the ViewVehicleProfile frame
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Unknown action!");
+                    break;
+            }
+        }
     }
 }

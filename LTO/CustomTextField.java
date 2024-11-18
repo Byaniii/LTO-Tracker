@@ -1,3 +1,5 @@
+package LTO;
+
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,5 +1,4 @@
-
-import LTO.UserFrame;
+package LTO;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,9 +17,9 @@ public class main {
     public static void main(String[] args) {
         frame newFrame = new frame("LTO Tracker");
         newFrame.setResizable(false);
-
+        newFrame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         // Resize LOGO
-        ImageIcon Icon = new ImageIcon("logo.png");
+        ImageIcon Icon = new ImageIcon("LTO/logo.png");
         Image resizedImage = Icon.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(resizedImage);
 

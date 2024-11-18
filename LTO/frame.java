@@ -1,3 +1,5 @@
+package LTO;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,7 +14,6 @@ public class frame extends JFrame {
         setTitle(title);
         setSize(1500, 900);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(createTopPanel(), BorderLayout.NORTH);
         bodyPanel = createBodyPanel(); // Initialize and store the body panel
         add(bodyPanel, BorderLayout.CENTER);
@@ -26,7 +27,7 @@ public class frame extends JFrame {
         topPanel.setLayout(null);
 
         // Load and add the top-left logo to the top panel
-        ImageIcon topLeftLogo = new ImageIcon("logo.png");
+        ImageIcon topLeftLogo = new ImageIcon("LTO/logo.png");
         JLabel logoLabel = new JLabel(topLeftLogo);
         logoLabel.setBounds(10, 10, topLeftLogo.getIconWidth(), topLeftLogo.getIconHeight());
         topPanel.add(logoLabel);
