@@ -1,4 +1,6 @@
 
+import LTO.UserFrame;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -42,21 +44,21 @@ public class main {
 
         CustomButton adminButton = newFrame.addButtonToBodyPanel("ADMIN", 400, 450, 300, 80);
         adminButton.addActionListener(e -> {
-            AdminLogin();
+            Login("Admin");
         });
 
         CustomButton userButton = newFrame.addButtonToBodyPanel("USER", 800, 450, 300, 80);
         userButton.addActionListener(e -> {
-            AdminLogin();
+            Login("User");
         });
     }
 
-    private static void AdminLogin() {
+    private static void Login(String WhichUser) {
         frame newFrame = new frame("Login");
         newFrame.bodyPanel.setBackground(Color.white);
 
         //Centered Admin text
-        JLabel Admin_Label = new JLabel("ADMIN");
+        JLabel Admin_Label = new JLabel(WhichUser);
         Admin_Label.setBounds(670, 80, 200, 70);
         Admin_Label.setFont(new Font("Serif", Font.BOLD, 40));
         Admin_Label.setForeground(Color.red);
@@ -104,14 +106,18 @@ public class main {
                     JOptionPane.showMessageDialog(newFrame, "Please enter your password.", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 } else if (username.equals("admin") && password.equals("123")) {
-                    AdminFrame adminFrame = new AdminFrame();
-                    newFrame.dispose();
+                    new AdminFrame(); // Open the AdminFrame for admin users
+                    newFrame.dispose(); // Close the login frame
+                } else if (username.equals("user") && password.equals("123")) {
+                    new UserFrame(username); // Open the UserFrame for regular users
+                    newFrame.dispose(); // Close the login frame
                 } else {
                     JOptionPane.showMessageDialog(newFrame, "Invalid username or password.", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
+
     }
 }
 
