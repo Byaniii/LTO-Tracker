@@ -4,11 +4,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
 
@@ -79,43 +76,21 @@ public class main {
         newFrame.bodyPanel.add(Password_Label);
 
         //Text field for Password
-        JPasswordField Password_Field = new JPasswordField();
-        Password_Field.setBounds(470, 306, 550, 50);
-        Password_Field.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        CustomTextField Password_Field = CustomTextField.createTextField(470, 306, 550, 50);
         newFrame.bodyPanel.add(Password_Field);
 
         //Sample Login button for testing lang
-        CustomButton Login_Button = CustomButton.createRedButton("LOGIN", 878, 385, 143, 37, 20);
-        newFrame.bodyPanel.add(Login_Button);
+        CustomButton Login_Button = newFrame.addButtonToBodyPanel("LOGIN", 878, 385, 143, 37);
+        Login_Button.setForeground(Color.white);
+        Login_Button.setFont(new Font("Arial", Font.BOLD,20));
+        Login_Button.setBackground(Color.red);
+        Login_Button.setBorder(null);
 
         Login_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = Username_Field.getText();
-                String password = new String(Password_Field.getPassword());
-
-                if (username.isEmpty() && password.isEmpty()) {
-                    JOptionPane.showMessageDialog(newFrame, "Please fill out both fields.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                } else if (username.isEmpty()) {
-                    JOptionPane.showMessageDialog(newFrame, "Please enter your username.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                } else if (password.isEmpty()) {
-                    JOptionPane.showMessageDialog(newFrame, "Please enter your password.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                } else if (username.equals("admin") && password.equals("123")) {
-                    AdminFrame adminFrame = new AdminFrame();
-                    newFrame.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(newFrame, "Invalid username or password.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                newFrame.dispose();
             }
         });
     }
 }
-
-
-
-
-
