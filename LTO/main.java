@@ -39,7 +39,7 @@ public class main {
         JLabel subtitleLabel = new JLabel("\"KEEPING OUR ROADS SAFE\"", SwingConstants.CENTER);
         subtitleLabel.setForeground(Color.WHITE);
         subtitleLabel.setFont(new Font("Serif", Font.BOLD, 40));
-        subtitleLabel.setBounds(455, 364, 590, 53);
+        subtitleLabel.setBounds(455, 364, 610, 53);
         newFrame.bodyPanel.add(subtitleLabel);
 
         CustomButton adminButton = newFrame.addButtonToBodyPanel("ADMIN", 400, 450, 300, 80);
