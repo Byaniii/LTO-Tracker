@@ -1,107 +1,62 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class frame extends JFrame {
+    public JPanel bodyPanel; // Declare bodyPanel as an instance variable
 
-    public JPanel bodyPanel;
-
+    // Constructor to initialize the frame
     public frame(String title) {
-        // Set up the frame with a given title
-        super(title);
-        setSize(800, 600);
+        setTitle(title);
+        setSize(1500, 900);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
+        add(createTopPanel(), BorderLayout.NORTH);
+        bodyPanel = createBodyPanel(); // Initialize and store the body panel
+        add(bodyPanel, BorderLayout.CENTER);
+        setVisible(true);//
+    }
 
-        bodyPanel = new JPanel();
+    private JPanel createTopPanel() {
+        JPanel topPanel = new JPanel();
+        topPanel.setPreferredSize(new Dimension(1500, 120));
+        topPanel.setBackground(Color.RED);
+        topPanel.setLayout(null);
+
+        // Load and add the top-left logo to the top panel
+        ImageIcon topLeftLogo = new ImageIcon("logo.png");
+        JLabel logoLabel = new JLabel(topLeftLogo);
+        logoLabel.setBounds(10, 10, topLeftLogo.getIconWidth(), topLeftLogo.getIconHeight());
+        topPanel.add(logoLabel);
+
+        // Add "LTO TRACKER" text to the top panel
+        JLabel titleLabel = new JLabel("LTO TRACKER");
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
+        titleLabel.setBounds(120, 30, 200, 50); // Position to the right of the logo
+        topPanel.add(titleLabel);
+
+        return topPanel;
+    }
+
+    private JPanel createBodyPanel() {
+        bodyPanel = new JPanel(); // Use `bodyPanel` instance variable
+        bodyPanel.setPreferredSize(new Dimension(1500, 780));
+        bodyPanel.setBackground(new Color(0x041427));
         bodyPanel.setLayout(null);
-        bodyPanel.setBounds(0, 0, 800, 600);
-        add(bodyPanel);
+
+        return bodyPanel;
     }
 
-    // Method to create a login panel for Admin/User
-    public void createLoginPanel(String loginType) {
-        bodyPanel.removeAll(); // Clear any existing components
-        bodyPanel.setBackground(Color.white);
-
-        // Login Title Label
-        JLabel loginTypeLabel = new JLabel(loginType.toUpperCase() + " LOGIN");
-        loginTypeLabel.setBounds(300, 50, 300, 70);
-        loginTypeLabel.setFont(new Font("Serif", Font.BOLD, 40));
-        loginTypeLabel.setForeground(Color.red);
-        bodyPanel.add(loginTypeLabel);
-
-        // Username Label
-        JLabel usernameLabel = new JLabel("USERNAME");
-        usernameLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        usernameLabel.setBounds(150, 150, 300, 30);
-        bodyPanel.add(usernameLabel);
-
-        // Text Field for Username
-        CustomTextField usernameField = CustomTextField.createTextField(300, 150, 300, 40);
-        bodyPanel.add(usernameField);
-
-        // Password Label
-        JLabel passwordLabel = new JLabel("PASSWORD");
-        passwordLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        passwordLabel.setBounds(150, 220, 300, 30);
-        bodyPanel.add(passwordLabel);
-
-        // Text Field for Password
-        CustomTextField passwordField = CustomTextField.createTextField(300, 220, 300, 40);
-        bodyPanel.add(passwordField);
-
-        // Login Button
-        CustomButton loginButton = new CustomButton("LOGIN");
-        loginButton.setBounds(300, 300, 150, 50);
-        loginButton.setForeground(Color.white);
-        loginButton.setFont(new Font("Arial", Font.BOLD, 20));
-        loginButton.setBackground(Color.red);
-        bodyPanel.add(loginButton);
-
-        // Add action listener for login button
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = passwordField.getText();
-
-                // Simple login validation for demonstration purposes
-                if (loginType.equalsIgnoreCase("admin") && username.equals("admin") && password.equals("adminPass")) {
-                    // Open Admin Panel
-                    new AdminFrame().setVisible(true);
-                    dispose(); // Close the current login frame
-                } else if (loginType.equalsIgnoreCase("user") && username.equals("user") && password.equals("userPass")) {
-                    // Open User Panel
-                    frame userFrame = new frame("User Panel");
-                    userFrame.setSize(600, 400);
-                    JLabel userWelcomeLabel = new JLabel("Welcome, User!");
-                    userWelcomeLabel.setFont(new Font("Serif", Font.BOLD, 30));
-                    userWelcomeLabel.setBounds(200, 50, 300, 40);
-                    userFrame.bodyPanel.add(userWelcomeLabel);
-                    userFrame.setVisible(true);
-                    dispose(); // Close the current login frame
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid credentials. Please try again.");
-                }
-            }
-        });
-
-        bodyPanel.repaint();
-        bodyPanel.revalidate();
-    }
-
+    // Method to add a button to the body panel without specifying actions
     public CustomButton addButtonToBodyPanel(String text, int x, int y, int width, int height) {
-        CustomButton button = new CustomButton(text);
-        button.setBounds(x, y, width, height);
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial", Font.BOLD, 20));
-        button.setBackground(Color.BLUE);
-        button.setBorder(null);
-        bodyPanel.add(button);
-        bodyPanel.repaint();
-        bodyPanel.revalidate();
-        return button;
+        CustomButton customButton = new CustomButton(text);
+        customButton.setBounds(x, y, width, height);
+        bodyPanel.add(customButton); // Add the button to the existing body panel
+        bodyPanel.revalidate(); // Refresh the panel to show the new button
+        bodyPanel.repaint(); // Repaint the panel to update the UI
+        return customButton; // Return the button so actions can be added externally
     }
 }
