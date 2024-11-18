@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 public class main {
     public static void main(String[] args) {
         frame newFrame = new frame("LTO Tracker");
+        newFrame.setResizable(false);
 
         // Resize LOGO
         ImageIcon Icon = new ImageIcon("logo.png");
@@ -55,39 +56,40 @@ public class main {
 
     private static void Login(String WhichUser) {
         frame newFrame = new frame("Login");
-        newFrame.bodyPanel.setBackground(Color.white);
+        newFrame.setResizable(false);
+        newFrame.setSize(1200, 780); // Set the size of the frame
+        newFrame.setLocationRelativeTo(null); // Center the frame on the screen
+        newFrame.bodyPanel.setBackground(Color.WHITE);
 
-        //Centered Admin text
+        // Centered title text
         JLabel Admin_Label = new JLabel(WhichUser);
-        Admin_Label.setBounds(670, 80, 200, 70);
+        Admin_Label.setBounds(550, 80, 200, 70); // Moved slightly to the left
         Admin_Label.setFont(new Font("Serif", Font.BOLD, 40));
-        Admin_Label.setForeground(Color.red);
+        Admin_Label.setForeground(Color.RED);
         newFrame.bodyPanel.add(Admin_Label);
 
-        //Username text
+        // Username text and field
         JLabel Username_Label = new JLabel("USERNAME");
         Username_Label.setFont(new Font("Serif", Font.BOLD, 24));
-        Username_Label.setBounds(300, 220, 300, 30);
+        Username_Label.setBounds(250, 220, 300, 30); // Moved to the left
         newFrame.bodyPanel.add(Username_Label);
 
-        //Text field for Username
-        CustomTextField Username_Field = CustomTextField.createTextField(470, 213, 550, 50);
+        CustomTextField Username_Field = CustomTextField.createTextField(420, 213, 550, 50); // Moved to the left
         newFrame.bodyPanel.add(Username_Field);
 
-        //Password Text
+        // Password text and field
         JLabel Password_Label = new JLabel("PASSWORD");
         Password_Label.setFont(new Font("Serif", Font.BOLD, 24));
-        Password_Label.setBounds(297, 313, 300, 30);
+        Password_Label.setBounds(247, 313, 300, 30); // Moved to the left
         newFrame.bodyPanel.add(Password_Label);
 
-        //Text field for Password
         JPasswordField Password_Field = new JPasswordField();
-        Password_Field.setBounds(470, 306, 550, 50);
+        Password_Field.setBounds(420, 306, 550, 50); // Moved to the left
         Password_Field.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         newFrame.bodyPanel.add(Password_Field);
 
-        //Sample Login button for testing lang
-        CustomButton Login_Button = CustomButton.createRedButton("LOGIN", 878, 385, 143, 37, 20);
+        // Login button
+        CustomButton Login_Button = CustomButton.createRedButton("LOGIN", 828, 385, 143, 37, 20); // Moved to the left
         newFrame.bodyPanel.add(Login_Button);
 
         Login_Button.addActionListener(new ActionListener() {
@@ -117,7 +119,6 @@ public class main {
                 }
             }
         });
-
     }
 }
 
