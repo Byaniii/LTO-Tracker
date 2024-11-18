@@ -1,9 +1,7 @@
 package LTO;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.*;
+import javax.swing.JLabel;
 
 public class AdminFrame extends frame {
     public AdminFrame() {
@@ -37,20 +35,15 @@ public class AdminFrame extends frame {
         CustomButton Violation = CustomButton.createRedButton("VIOLATION", 532, 414, 400, 63, 25);
         bodyPanel.add(Violation);
 
-        bodyPanel.revalidate();
-        bodyPanel.repaint();
     }
 
     private void Register() {
         bodyPanel.removeAll();
-
-        // Title Label
         JLabel titleLabel = new JLabel("Vehicle Registration");
         titleLabel.setFont(new Font("Serif", Font.BOLD, 32));
         titleLabel.setBounds(600, 50, 400, 40);
         bodyPanel.add(titleLabel);
 
-        // Labels and Text Fields for Vehicle Registration
         JLabel VehicleOwner_Label = new JLabel("Name of Vehicle Owner");
         VehicleOwner_Label.setFont(new Font("Serif", Font.PLAIN, 24));
         VehicleOwner_Label.setBounds(200, 110, 300, 30);
@@ -91,52 +84,151 @@ public class AdminFrame extends frame {
         CustomTextField DateOfBirth_Field = CustomTextField.createTextField(200, 460, 420, 40);
         bodyPanel.add(DateOfBirth_Field);
 
-        // "Next" Button
-        CustomButton nextButton = CustomButton.createRedButton("NEXT", 1200, 570, 150, 50, 25);
-        bodyPanel.add(nextButton);
-
-        // Action Listener for the "Next" Button
+        CustomButton nextButton = CustomButton.createRedButton("NEXT", 1200,570,150,50,30);
         nextButton.addActionListener(e -> {
-            // Check if any fields are empty
-            if (VehicleOwner_Field.getText().isEmpty() ||
-                    Address_Field.getText().isEmpty() ||
-                    ContactInformation_Field.getText().isEmpty() ||
-                    IdentificationNumber_Field.getText().isEmpty() ||
-                    DateOfBirth_Field.getText().isEmpty()) {
-
-                // Show a dialog if any field is empty
-                JOptionPane.showMessageDialog(this, "All fields must not be empty.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                // Collect data and save it
-                String vehicleOwner = VehicleOwner_Field.getText();
-                String address = Address_Field.getText();
-                String contactInformation = ContactInformation_Field.getText();
-                String identificationNumber = IdentificationNumber_Field.getText();
-                String dateOfBirth = DateOfBirth_Field.getText();
-
-                // Store data in a list
-                List<String> data = new ArrayList<>();
-                data.add("Name of Vehicle Owner: " + vehicleOwner);
-                data.add("Address: " + address);
-                data.add("Contact Information: " + contactInformation);
-                data.add("Identification Number: " + identificationNumber);
-                data.add("Date of Birth: " + dateOfBirth);
-
-                // Save the data using FileHandler
-                FileHandler.saveData(data);
-                JOptionPane.showMessageDialog(this, "Vehicle registration data saved successfully!");
-
-                // Optionally, clear the fields after saving
-                VehicleOwner_Field.setText("");
-                Address_Field.setText("");
-                ContactInformation_Field.setText("");
-                IdentificationNumber_Field.setText("");
-                DateOfBirth_Field.setText("");
-            }
+            Register_Next();
         });
+        bodyPanel.add(nextButton); //
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+
+
+    }
+
+
+
+    private void Register_Next() {
+        bodyPanel.removeAll();
+
+        // Title Label
+        JLabel titleLabel = new JLabel("Vehicle Registration");
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 32));
+        titleLabel.setBounds(600, 40, 315, 39);
+        bodyPanel.add(titleLabel);
+
+        // Vehicle Identification Number
+        JLabel VehicleIdentificationNumber_Label = new JLabel("Vehicle Identification Number");
+        VehicleIdentificationNumber_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        VehicleIdentificationNumber_Label.setBounds(250, 87, 400, 29);
+        bodyPanel.add(VehicleIdentificationNumber_Label);
+
+        CustomTextField VehicleIdentificationNumber_Field = CustomTextField.createTextField(250, 127, 420, 30);
+        bodyPanel.add(VehicleIdentificationNumber_Field);
+
+        // Registration Number
+        JLabel RegistrationNumber_Label = new JLabel("Registration Number");
+        RegistrationNumber_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        RegistrationNumber_Label.setBounds(250, 169, 234, 29);
+        bodyPanel.add(RegistrationNumber_Label);
+
+        CustomTextField RegistrationNumber_Field = CustomTextField.createTextField(250, 204, 420, 30);
+        bodyPanel.add(RegistrationNumber_Field);
+
+        // Make and Model
+        JLabel MakeAndModel_Label = new JLabel("Make and Model");
+        MakeAndModel_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        MakeAndModel_Label.setBounds(250, 245, 188, 29);
+        bodyPanel.add(MakeAndModel_Label);
+
+        CustomTextField MakeAndModel_Field = CustomTextField.createTextField(250, 280, 420, 30);
+        bodyPanel.add(MakeAndModel_Field);
+
+        // Body Type
+        JLabel BodyType_Label = new JLabel("Body Type");
+        BodyType_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        BodyType_Label.setBounds(250, 322, 121, 29);
+        bodyPanel.add(BodyType_Label);
+
+        CustomTextField BodyType_Field = CustomTextField.createTextField(250, 358, 420, 30);
+        bodyPanel.add(BodyType_Field);
+
+        // Color
+        JLabel Color_Label = new JLabel("Color");
+        Color_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        Color_Label.setBounds(250, 399, 234, 29);
+        bodyPanel.add(Color_Label);
+
+        CustomTextField Color_Field = CustomTextField.createTextField(250, 435, 420, 30);
+        bodyPanel.add(Color_Field);
+
+        // Weight
+        JLabel Weight_Label = new JLabel("Weight");
+        Weight_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        Weight_Label.setBounds(250, 476, 234, 29);
+        bodyPanel.add(Weight_Label);
+
+        CustomTextField Weight_Field = CustomTextField.createTextField(250, 512, 420, 30);
+        bodyPanel.add(Weight_Field);
+
+        // Insurance Provider
+        JLabel InsuranceProvider_Label = new JLabel("Insurance Provider");
+        InsuranceProvider_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        InsuranceProvider_Label.setBounds(850, 87, 300, 30);
+        bodyPanel.add(InsuranceProvider_Label);
+
+        CustomTextField InsuranceProvider_Field = CustomTextField.createTextField(850, 127, 420, 30);
+        bodyPanel.add(InsuranceProvider_Field);
+
+        // Insurance Validity Period
+        JLabel InsuranceValidityPeriod_Label = new JLabel("Insurance Validity Period");
+        InsuranceValidityPeriod_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        InsuranceValidityPeriod_Label.setBounds(850, 169, 300, 30);
+        bodyPanel.add(InsuranceValidityPeriod_Label);
+
+        CustomTextField InsuranceValidityPeriod_Field = CustomTextField.createTextField(850, 204, 420, 30);
+        bodyPanel.add(InsuranceValidityPeriod_Field);
+
+        // Policy Number
+        JLabel PolicyNumber_Label = new JLabel("Policy Number");
+        PolicyNumber_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        PolicyNumber_Label.setBounds(850, 245, 300, 30);
+        bodyPanel.add(PolicyNumber_Label);
+
+        CustomTextField PolicyNumber_Field = CustomTextField.createTextField(850, 280, 420, 30);
+        bodyPanel.add(PolicyNumber_Field);
+
+        // Vehicle Type
+        JLabel VehicleType_Label = new JLabel("Vehicle Type");
+        VehicleType_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        VehicleType_Label.setBounds(850, 322, 300, 30);
+        bodyPanel.add(VehicleType_Label);
+
+        CustomTextField VehicleType_Field = CustomTextField.createTextField(850, 358, 420, 30);
+        bodyPanel.add(VehicleType_Field);
+
+        // Brand
+        JLabel Brand_Label = new JLabel("Brand");
+        Brand_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        Brand_Label.setBounds(850, 399, 300, 30);
+        bodyPanel.add(Brand_Label);
+
+        CustomTextField Brand_Field = CustomTextField.createTextField(850, 435, 420, 30);
+        bodyPanel.add(Brand_Field);
+
+        JLabel Dimensions_Label = new JLabel("Dimensions");
+        Dimensions_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        Dimensions_Label.setBounds(850, 476, 300, 30);
+        bodyPanel.add(Dimensions_Label);
+
+        CustomTextField Dimensions_Field = CustomTextField.createTextField(850, 512, 420, 30);
+        bodyPanel.add(Dimensions_Field);
+
+        // Finish Button
+        CustomButton finishButton = CustomButton.createRedButton("FINISH", 1195, 604, 150, 50, 24);
+        bodyPanel.add(finishButton);
 
         // Refresh the panel
         bodyPanel.revalidate();
         bodyPanel.repaint();
     }
+
+
+
+
+
+
+
+
+
+
 }

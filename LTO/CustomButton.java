@@ -29,7 +29,7 @@ public class CustomButton extends JButton{
         redButton.setBorder(null); 
         redButton.setOpaque(true);
         redButton.setBounds(x, y, width, height);
-        redButton.setFont(new Font("Arial", Font.PLAIN, fontSize));
+        redButton.setFont(new Font("Arial", Font.BOLD, fontSize));
         return redButton;
     }
 }
