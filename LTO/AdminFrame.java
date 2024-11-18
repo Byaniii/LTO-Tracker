@@ -84,12 +84,151 @@ public class AdminFrame extends frame {
         CustomTextField DateOfBirth_Field = CustomTextField.createTextField(200, 460, 420, 40);
         bodyPanel.add(DateOfBirth_Field);
 
-        CustomButton nextButton = CustomButton.createButton("NEXT", 1200, 570, 150, 50);
-        nextButton.setBackground(Color.red);
-        nextButton.setForeground(Color.white);
-        nextButton.setBorder(null);
+        CustomButton nextButton = CustomButton.createRedButton("NEXT", 1200,570,150,50,30);
+        nextButton.addActionListener(e -> {
+            Register_Next();
+        });
         bodyPanel.add(nextButton); //
         bodyPanel.revalidate();
         bodyPanel.repaint();
+
+
     }
+
+
+
+    private void Register_Next() {
+        bodyPanel.removeAll();
+
+        // Title Label
+        JLabel titleLabel = new JLabel("Vehicle Registration");
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 32));
+        titleLabel.setBounds(600, 40, 315, 39);
+        bodyPanel.add(titleLabel);
+
+        // Vehicle Identification Number
+        JLabel VehicleIdentificationNumber_Label = new JLabel("Vehicle Identification Number");
+        VehicleIdentificationNumber_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        VehicleIdentificationNumber_Label.setBounds(250, 87, 400, 29);
+        bodyPanel.add(VehicleIdentificationNumber_Label);
+
+        CustomTextField VehicleIdentificationNumber_Field = CustomTextField.createTextField(250, 127, 420, 30);
+        bodyPanel.add(VehicleIdentificationNumber_Field);
+
+        // Registration Number
+        JLabel RegistrationNumber_Label = new JLabel("Registration Number");
+        RegistrationNumber_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        RegistrationNumber_Label.setBounds(250, 169, 234, 29);
+        bodyPanel.add(RegistrationNumber_Label);
+
+        CustomTextField RegistrationNumber_Field = CustomTextField.createTextField(250, 204, 420, 30);
+        bodyPanel.add(RegistrationNumber_Field);
+
+        // Make and Model
+        JLabel MakeAndModel_Label = new JLabel("Make and Model");
+        MakeAndModel_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        MakeAndModel_Label.setBounds(250, 245, 188, 29);
+        bodyPanel.add(MakeAndModel_Label);
+
+        CustomTextField MakeAndModel_Field = CustomTextField.createTextField(250, 280, 420, 30);
+        bodyPanel.add(MakeAndModel_Field);
+
+        // Body Type
+        JLabel BodyType_Label = new JLabel("Body Type");
+        BodyType_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        BodyType_Label.setBounds(250, 322, 121, 29);
+        bodyPanel.add(BodyType_Label);
+
+        CustomTextField BodyType_Field = CustomTextField.createTextField(250, 358, 420, 30);
+        bodyPanel.add(BodyType_Field);
+
+        // Color
+        JLabel Color_Label = new JLabel("Color");
+        Color_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        Color_Label.setBounds(250, 399, 234, 29);
+        bodyPanel.add(Color_Label);
+
+        CustomTextField Color_Field = CustomTextField.createTextField(250, 435, 420, 30);
+        bodyPanel.add(Color_Field);
+
+        // Weight
+        JLabel Weight_Label = new JLabel("Weight");
+        Weight_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        Weight_Label.setBounds(250, 476, 234, 29);
+        bodyPanel.add(Weight_Label);
+
+        CustomTextField Weight_Field = CustomTextField.createTextField(250, 512, 420, 30);
+        bodyPanel.add(Weight_Field);
+
+        // Insurance Provider
+        JLabel InsuranceProvider_Label = new JLabel("Insurance Provider");
+        InsuranceProvider_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        InsuranceProvider_Label.setBounds(850, 87, 300, 30);
+        bodyPanel.add(InsuranceProvider_Label);
+
+        CustomTextField InsuranceProvider_Field = CustomTextField.createTextField(850, 127, 420, 30);
+        bodyPanel.add(InsuranceProvider_Field);
+
+        // Insurance Validity Period
+        JLabel InsuranceValidityPeriod_Label = new JLabel("Insurance Validity Period");
+        InsuranceValidityPeriod_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        InsuranceValidityPeriod_Label.setBounds(850, 169, 300, 30);
+        bodyPanel.add(InsuranceValidityPeriod_Label);
+
+        CustomTextField InsuranceValidityPeriod_Field = CustomTextField.createTextField(850, 204, 420, 30);
+        bodyPanel.add(InsuranceValidityPeriod_Field);
+
+        // Policy Number
+        JLabel PolicyNumber_Label = new JLabel("Policy Number");
+        PolicyNumber_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        PolicyNumber_Label.setBounds(850, 245, 300, 30);
+        bodyPanel.add(PolicyNumber_Label);
+
+        CustomTextField PolicyNumber_Field = CustomTextField.createTextField(850, 280, 420, 30);
+        bodyPanel.add(PolicyNumber_Field);
+
+        // Vehicle Type
+        JLabel VehicleType_Label = new JLabel("Vehicle Type");
+        VehicleType_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        VehicleType_Label.setBounds(850, 322, 300, 30);
+        bodyPanel.add(VehicleType_Label);
+
+        CustomTextField VehicleType_Field = CustomTextField.createTextField(850, 358, 420, 30);
+        bodyPanel.add(VehicleType_Field);
+
+        // Brand
+        JLabel Brand_Label = new JLabel("Brand");
+        Brand_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        Brand_Label.setBounds(850, 399, 300, 30);
+        bodyPanel.add(Brand_Label);
+
+        CustomTextField Brand_Field = CustomTextField.createTextField(850, 435, 420, 30);
+        bodyPanel.add(Brand_Field);
+
+        JLabel Dimensions_Label = new JLabel("Dimensions");
+        Dimensions_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        Dimensions_Label.setBounds(850, 476, 300, 30);
+        bodyPanel.add(Dimensions_Label);
+
+        CustomTextField Dimensions_Field = CustomTextField.createTextField(850, 512, 420, 30);
+        bodyPanel.add(Dimensions_Field);
+
+        // Finish Button
+        CustomButton finishButton = CustomButton.createRedButton("FINISH", 1195, 604, 150, 50, 24);
+        bodyPanel.add(finishButton);
+
+        // Refresh the panel
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+    }
+
+
+
+
+
+
+
+
+
+
 }
