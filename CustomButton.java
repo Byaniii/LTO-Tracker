@@ -18,4 +18,16 @@ public class CustomButton extends JButton{
         button.setBounds(x, y, width, height);
         return button; //
     }
+
+    public static CustomButton createRedButton(String text, int x, int y, int width, int height, int fontSize) {
+        CustomButton redButton = new CustomButton(text);
+        redButton.setBackground(Color.RED); // White background
+        redButton.setForeground(Color.WHITE); // Black text
+        redButton.setFocusPainted(false); // Remove focus border
+        redButton.setBorder(null); 
+        redButton.setOpaque(true);
+        redButton.setBounds(x, y, width, height);
+        redButton.setFont(new Font("Arial", Font.PLAIN, fontSize));
+        return redButton;
+    }
 }
