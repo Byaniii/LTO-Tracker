@@ -48,7 +48,6 @@ public class AdminFrame extends frame {
 
         CustomButton RegisterVehicle = CustomButton.createRedButton("REGISTER VEHICLE", 532, 222, 400, 63, 25);
         bodyPanel.add(RegisterVehicle);
-
         RegisterVehicle.addActionListener(e -> Register());
 
         CustomButton FindVehicle = CustomButton.createRedButton("FIND VEHICLE", 532, 318, 400, 63, 25);
@@ -60,6 +59,23 @@ public class AdminFrame extends frame {
 
         CustomButton Violation = CustomButton.createRedButton("VIOLATION", 532, 414, 400, 63, 25);
         bodyPanel.add(Violation);
+
+        // LOGOUT button
+        CustomButton logoutButton = CustomButton.createRedButton("LOGOUT", 50, 50, 400, 120, 30); // Match size and style
+        logoutButton.setFont(new Font("Serif", Font.BOLD, 30)); // Increased font size
+        logoutButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        logoutButton.addActionListener(e -> {
+            dispose(); // Close the current AdminFrame
+            main.main(null); // Redirect to the main frame (home page)
+        });
+
+        // Footer panel to hold the logout button
+        JPanel footerPanel = new JPanel();
+        footerPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); // Align to the left
+        footerPanel.setBackground(Color.WHITE); // Match background color
+        footerPanel.add(logoutButton);
+
+        add(footerPanel, BorderLayout.SOUTH); // Add footer panel to the main frame
 
         bodyPanel.revalidate();
         bodyPanel.repaint();
@@ -172,14 +188,13 @@ public class AdminFrame extends frame {
         });
         bodyPanel.add(nextButton);
 
-        CustomButton backButton = CustomButton.createRedButton("BACK", 50, 570, 150, 50, 30);
+        CustomButton backButton = CustomButton.createRedButton("BACK", 50, 604, 150, 50, 24);
         backButton.addActionListener(e -> adminPanel());
         bodyPanel.add(backButton);
 
         bodyPanel.revalidate();
         bodyPanel.repaint();
     }
-
 
     private void Register_Next() {
         bodyPanel.removeAll();
@@ -364,5 +379,4 @@ public class AdminFrame extends frame {
         bodyPanel.revalidate();
         bodyPanel.repaint();
     }
-
 }

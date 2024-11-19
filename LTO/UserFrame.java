@@ -35,15 +35,13 @@ public class UserFrame extends JFrame {
 
         add(topPanel, BorderLayout.NORTH);
 
-        // Retrieve the vehicle owner's name
-        String ownerName = getVehicleOwnerName(email);
-
         // Body panel
         JPanel bodyPanel = new JPanel();
         bodyPanel.setBackground(Color.WHITE);
         bodyPanel.setLayout(new BoxLayout(bodyPanel, BoxLayout.Y_AXIS));
 
         // Welcome message
+        String ownerName = getVehicleOwnerName(email); // Retrieve vehicle owner name
         JLabel welcomeLabel = new JLabel("Welcome, " + ownerName + "!");
         welcomeLabel.setFont(new Font("Serif", Font.BOLD, 60));
         welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -52,16 +50,31 @@ public class UserFrame extends JFrame {
 
         // Buttons
         bodyPanel.add(Box.createRigidArea(new Dimension(0, 50))); // Add spacing
-
         String[] buttonTexts = {"Profile", "Violations", "Vehicle Profile"};
         for (String text : buttonTexts) {
             JButton button = createButton(text);
-            button.addActionListener(new ButtonClickListener(text, email)); // Pass email to the listener
+            button.addActionListener((ActionListener) new ButtonClickListener(text, email)); // Pass email to the listener
             bodyPanel.add(button);
             bodyPanel.add(Box.createRigidArea(new Dimension(0, 60))); // Add more spacing between buttons
         }
 
+        // Back button
+        CustomButton backButton = CustomButton.createRedButton("LOGOUT", 50, 50, 150, 50, 30);
+        backButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        backButton.addActionListener(e -> {
+            dispose(); // Close the current UserFrame
+            main.main(null); // Reopen the main frame (home page)
+        });
+
+        // Footer panel to hold the back button
+        JPanel footerPanel = new JPanel();
+        footerPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); // Align to the left
+        footerPanel.setBackground(Color.WHITE); // Match background color
+        footerPanel.add(backButton);
+
         add(bodyPanel, BorderLayout.CENTER);
+        add(footerPanel, BorderLayout.SOUTH); // Add footer at the bottom
+
         setVisible(true);
     }
 
