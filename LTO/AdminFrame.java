@@ -90,12 +90,21 @@ public class AdminFrame extends frame {
         CustomTextField DateOfBirth_Field = CustomTextField.createTextField(200, 460, 420, 40);
         bodyPanel.add(DateOfBirth_Field);
 
+        // New Email field
+        JLabel Email_Label = new JLabel("Email");
+        Email_Label.setFont(new Font("Serif", Font.PLAIN, 24));
+        Email_Label.setBounds(200, 510, 300, 30);
+        bodyPanel.add(Email_Label);
+
+        CustomTextField Email_Field = CustomTextField.createTextField(200, 540, 420, 40);
+        bodyPanel.add(Email_Field);
+
         CustomButton nextButton = CustomButton.createRedButton("NEXT", 1200, 570, 150, 50, 30);
         nextButton.addActionListener(e -> {
             // Check if any fields are empty
             if (VehicleOwner_Field.getText().isEmpty() || Address_Field.getText().isEmpty() ||
                     ContactInformation_Field.getText().isEmpty() || IdentificationNumber_Field.getText().isEmpty() ||
-                    DateOfBirth_Field.getText().isEmpty()) {
+                    DateOfBirth_Field.getText().isEmpty() || Email_Field.getText().isEmpty()) {
 
                 // Show a dialog if any field is empty
                 JOptionPane.showMessageDialog(this, "All fields must not be empty.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -107,6 +116,7 @@ public class AdminFrame extends frame {
                 data.add("Contact Information: " + ContactInformation_Field.getText());
                 data.add("Identification Number: " + IdentificationNumber_Field.getText());
                 data.add("Date of Birth: " + DateOfBirth_Field.getText());
+                data.add("Email: " + Email_Field.getText()); // Added Email data
 
                 // Save the data using FileHandler
                 FileHandler.saveData(data);
@@ -126,6 +136,7 @@ public class AdminFrame extends frame {
         bodyPanel.revalidate();
         bodyPanel.repaint();
     }
+
 
     private void Register_Next() {
         bodyPanel.removeAll(); // Clear the panel
