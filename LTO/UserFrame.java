@@ -9,7 +9,7 @@ public class UserFrame extends JFrame {
     public UserFrame(String username) {
         // Frame setup
         setTitle("LTO Tracker - User Panel");
-        setSize(1500, 900); // Same size as AdminFrame
+        setSize(1500, 900);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -47,23 +47,22 @@ public class UserFrame extends JFrame {
         // Buttons
         bodyPanel.add(Box.createRigidArea(new Dimension(0, 50))); // Add spacing
 
-        String[] buttonTexts = {"VIEW PROFILE", "VIEW VIOLATIONS", "VIEW VEHICLE PROFILE"};
+        String[] buttonTexts = {"Profile", "Violations", "Vehicle Profile"};
         for (String text : buttonTexts) {
             JButton button = createButton(text);
-            button.addActionListener(new ButtonClickListener(text)); // Add action listener
+            button.addActionListener(new ButtonClickListener(text, username)); // Pass username to the listener
             bodyPanel.add(button);
-            bodyPanel.add(Box.createRigidArea(new Dimension(0, 30))); // Add more spacing between buttons
+            bodyPanel.add(Box.createRigidArea(new Dimension(0, 60))); // Add more spacing between buttons
         }
 
         add(bodyPanel, BorderLayout.CENTER);
-
         setVisible(true);
     }
 
     private JButton createButton(String text) {
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(400, 120)); // Increased size of the buttons
-        button.setFont(new Font("Serif", Font.BOLD, 40)); // Increased font size
+        button.setFont(new Font("Serif", Font.BOLD, 60)); // Increased font size
         button.setBackground(Color.RED);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
@@ -72,33 +71,20 @@ public class UserFrame extends JFrame {
     }
 
     // Inner class to handle button clicks
-    // Inner class to handle button clicks
     private class ButtonClickListener implements ActionListener {
         private String buttonText;
+        private String username;
 
-        public ButtonClickListener(String buttonText) {
+        public ButtonClickListener(String buttonText, String username) {
             this.buttonText = buttonText;
+            this.username = username;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            switch (buttonText) {
-                case "VIEW PROFILE":
-                    dispose();
-                    new ViewProfile(); // Open the ViewProfile frame
-                    break;
-                case "VIEW VIOLATIONS":
-                    dispose();
-                    new ViewViolations(); // Open the ViewViolations frame
-                    break;
-                case "VIEW VEHICLE PROFILE":
-                    dispose();
-                    new ViewVehicleProfile(); // Open the ViewVehicleProfile frame
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "Unknown action!");
-                    break;
-            }
+            // Dispose of the current frame and open the appropriate view
+            dispose();
+            new ViewDetails(buttonText, username); // Pass username to ViewDetails
         }
     }
 }

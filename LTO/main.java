@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
-
 public class main {
     public static void main(String[] args) {
         frame newFrame = new frame("LTO Tracker");
