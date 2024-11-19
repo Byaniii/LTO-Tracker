@@ -43,13 +43,16 @@ public class main {
 
         CustomButton adminButton = newFrame.addButtonToBodyPanel("ADMIN", 400, 450, 300, 80);
         adminButton.addActionListener(e -> {
+            newFrame.dispose();
             Login("Admin");
         });
 
         CustomButton userButton = newFrame.addButtonToBodyPanel("USER", 800, 450, 300, 80);
         userButton.addActionListener(e -> {
+            newFrame.dispose();
             Login("User");
         });
+
     }
 
     private static void Login(String WhichUser) {
@@ -90,6 +93,15 @@ public class main {
         CustomButton Login_Button = CustomButton.createRedButton("LOGIN", 828, 385, 143, 37, 20); // Moved to the left
         newFrame.bodyPanel.add(Login_Button);
 
+        // "Back" button to return to the home page
+        CustomButton Back_Button = CustomButton.createRedButton("BACK", 420, 385, 143, 37, 20); // Positioned to the left
+        Back_Button.addActionListener(e -> {
+            newFrame.dispose(); // Close the login frame
+            main.main(null); // Reopen the home page
+        });
+        newFrame.bodyPanel.add(Back_Button);
+
+        // Action listener for the login button
         Login_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
