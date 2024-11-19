@@ -61,52 +61,49 @@ public class FindVehicleFrame extends JFrame {
         // "Main Menu" button
         CustomButton mainMenuButton = CustomButton.createRedButton("MAIN MENU", 50, 500, 150, 50, 20);
         mainMenuButton.addActionListener(e -> {
-            // Create an instance of AdminFrame and make it visible
             new AdminFrame();
-            // Dispose of the current FindVehicleFrame to close it
             dispose();
         });
         add(mainMenuButton);
 
-
         // "Search" button
         CustomButton searchButton = CustomButton.createRedButton("SEARCH", 600, 500, 150, 50, 20);
-        searchButton.addActionListener(e -> searchVehicle()); // Call searchVehicle() when clicked
+        searchButton.addActionListener(e -> searchVehicle());
         add(searchButton);
 
         setVisible(true);
     }
 
-    // The searchVehicle method
     private void searchVehicle() {
         String plateNumber = VehiclePlateNumber_Field.getText().toLowerCase().trim();
         String ownerName = OwnerName_Field.getText().toLowerCase().trim();
         String registrationNumber = RegistrationNumber_Field.getText().toLowerCase().trim();
-        boolean found = false;
-
-        StringBuilder searchResults = new StringBuilder("Search Results:\n");
 
         try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\vival\\IdeaProjects\\LTO-Tracker\\LTO\\vehicle_registration_data.txt"))) {
             String line;
+            StringBuilder vehicleData = new StringBuilder();
+            boolean found = false;
+
             while ((line = reader.readLine()) != null) {
-                String lowerCaseLine = line.toLowerCase();
-                // Check if the line contains any of the search terms
-                if ((plateNumber.isEmpty() || lowerCaseLine.contains(plateNumber)) &&
-                        (ownerName.isEmpty() || lowerCaseLine.contains(ownerName)) &&
-                        (registrationNumber.isEmpty() || lowerCaseLine.contains(registrationNumber))) {
-                    searchResults.append(line).append("\n");
+                if (line.toLowerCase().contains(plateNumber) || line.toLowerCase().contains(ownerName) || line.toLowerCase().contains(registrationNumber)) {
                     found = true;
+                    vehicleData.append(line).append("\n");
+                    // Collect next lines for details
+                    for (int i = 0; i < 17; i++) {
+                        vehicleData.append(reader.readLine()).append("\n");
+                    }
+                    break;
                 }
+            }
+
+            if (found) {
+                new VehicleDetailsFrame(vehicleData.toString()); // Open the details frame
+                dispose(); // Close the FindVehicleFrame
+            } else {
+                JOptionPane.showMessageDialog(this, "No matching vehicle details found.", "Search Results", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error reading the file: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (found) {
-            JOptionPane.showMessageDialog(this, searchResults.toString(), "Search Results", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "No matching vehicle details found.", "Search Results", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }
