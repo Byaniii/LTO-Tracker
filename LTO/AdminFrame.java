@@ -52,6 +52,10 @@ public class AdminFrame extends frame {
         RegisterVehicle.addActionListener(e -> Register());
 
         CustomButton FindVehicle = CustomButton.createRedButton("FIND VEHICLE", 532, 318, 400, 63, 25);
+        FindVehicle.addActionListener(e -> {
+            dispose(); // Close the AdminFrame
+            new FindVehicleFrame(); // Open the FindVehicleFrame
+        });
         bodyPanel.add(FindVehicle);
 
         CustomButton Violation = CustomButton.createRedButton("VIOLATION", 532, 414, 400, 63, 25);
@@ -78,60 +82,60 @@ public class AdminFrame extends frame {
         // First Part of the Registration Form
         JLabel VehicleOwner_Label = new JLabel("Name of Vehicle Owner");
         VehicleOwner_Label.setFont(new Font("Serif", Font.PLAIN, 24));
-        VehicleOwner_Label.setBounds(200, yPosition, 300, labelHeight);
+        VehicleOwner_Label.setBounds(250, yPosition, 300, labelHeight);
         bodyPanel.add(VehicleOwner_Label);
 
-        VehicleOwner_Field = CustomTextField.createTextField(200, yPosition + labelHeight, 420, fieldHeight);
+        VehicleOwner_Field = CustomTextField.createTextField(250, yPosition + labelHeight, 420, fieldHeight);
         bodyPanel.add(VehicleOwner_Field);
 
         yPosition += labelHeight + fieldHeight + spacing;
 
         JLabel Address_Label = new JLabel("Address");
         Address_Label.setFont(new Font("Serif", Font.PLAIN, 24));
-        Address_Label.setBounds(200, yPosition, 300, labelHeight);
+        Address_Label.setBounds(250, yPosition, 300, labelHeight);
         bodyPanel.add(Address_Label);
 
-        Address_Field = CustomTextField.createTextField(200, yPosition + labelHeight, 420, fieldHeight);
+        Address_Field = CustomTextField.createTextField(250, yPosition + labelHeight, 420, fieldHeight);
         bodyPanel.add(Address_Field);
 
         yPosition += labelHeight + fieldHeight + spacing;
 
         JLabel ContactInformation_Label = new JLabel("Contact Information");
         ContactInformation_Label.setFont(new Font("Serif", Font.PLAIN, 24));
-        ContactInformation_Label.setBounds(200, yPosition, 300, labelHeight);
+        ContactInformation_Label.setBounds(250, yPosition, 300, labelHeight);
         bodyPanel.add(ContactInformation_Label);
 
-        ContactInformation_Field = CustomTextField.createTextField(200, yPosition + labelHeight, 420, fieldHeight);
+        ContactInformation_Field = CustomTextField.createTextField(250, yPosition + labelHeight, 420, fieldHeight);
         bodyPanel.add(ContactInformation_Field);
 
         yPosition += labelHeight + fieldHeight + spacing;
 
         JLabel IdentificationNumber_Label = new JLabel("Identification Number");
         IdentificationNumber_Label.setFont(new Font("Serif", Font.PLAIN, 24));
-        IdentificationNumber_Label.setBounds(200, yPosition, 300, labelHeight);
+        IdentificationNumber_Label.setBounds(250, yPosition, 300, labelHeight);
         bodyPanel.add(IdentificationNumber_Label);
 
-        IdentificationNumber_Field = CustomTextField.createTextField(200, yPosition + labelHeight, 420, fieldHeight);
+        IdentificationNumber_Field = CustomTextField.createTextField(250, yPosition + labelHeight, 420, fieldHeight);
         bodyPanel.add(IdentificationNumber_Field);
 
         yPosition += labelHeight + fieldHeight + spacing;
 
         JLabel DateOfBirth_Label = new JLabel("Date of Birth");
         DateOfBirth_Label.setFont(new Font("Serif", Font.PLAIN, 24));
-        DateOfBirth_Label.setBounds(200, yPosition, 300, labelHeight);
+        DateOfBirth_Label.setBounds(250, yPosition, 300, labelHeight);
         bodyPanel.add(DateOfBirth_Label);
 
-        DateOfBirth_Field = CustomTextField.createTextField(200, yPosition + labelHeight, 420, fieldHeight);
+        DateOfBirth_Field = CustomTextField.createTextField(250, yPosition + labelHeight, 420, fieldHeight);
         bodyPanel.add(DateOfBirth_Field);
 
         yPosition += labelHeight + fieldHeight + spacing;
 
         JLabel Email_Label = new JLabel("Email");
         Email_Label.setFont(new Font("Serif", Font.PLAIN, 24));
-        Email_Label.setBounds(200, yPosition, 300, labelHeight);
+        Email_Label.setBounds(250, yPosition, 300, labelHeight);
         bodyPanel.add(Email_Label);
 
-        Email_Field = CustomTextField.createTextField(200, yPosition + labelHeight, 420, fieldHeight);
+        Email_Field = CustomTextField.createTextField(250, yPosition + labelHeight, 420, fieldHeight);
         bodyPanel.add(Email_Field);
 
         // Add next and back buttons
