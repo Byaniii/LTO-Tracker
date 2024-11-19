@@ -75,35 +75,46 @@ public class FindVehicleFrame extends JFrame {
     }
 
     private void searchVehicle() {
-        String plateNumber = VehiclePlateNumber_Field.getText().toLowerCase().trim();
-        String ownerName = OwnerName_Field.getText().toLowerCase().trim();
-        String registrationNumber = RegistrationNumber_Field.getText().toLowerCase().trim();
+        String ownerNameInput = OwnerName_Field.getText().trim();
+        boolean found = false;
+        StringBuilder vehicleData = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\vival\\IdeaProjects\\LTO-Tracker\\LTO\\vehicle_registration_data.txt"))) {
             String line;
-            StringBuilder vehicleData = new StringBuilder();
-            boolean found = false;
+            boolean captureLines = false;
+            int linesCaptured = 0;
 
             while ((line = reader.readLine()) != null) {
-                if (line.toLowerCase().contains(plateNumber) || line.toLowerCase().contains(ownerName) || line.toLowerCase().contains(registrationNumber)) {
-                    found = true;
+                // Check if the line contains the owner's name
+                if (line.equalsIgnoreCase("Name of Vehicle Owner: " + ownerNameInput)) {
+                    captureLines = true; // Start capturing the next lines
                     vehicleData.append(line).append("\n");
-                    // Collect next lines for details
-                    for (int i = 0; i < 17; i++) {
-                        vehicleData.append(reader.readLine()).append("\n");
-                    }
+                    linesCaptured++;
+                    continue;
+                }
+
+                // If we are capturing lines, add the current line
+                if (captureLines && linesCaptured < 18) {
+                    vehicleData.append(line).append("\n");
+                    linesCaptured++;
+                }
+
+                // Stop capturing after 18 lines
+                if (linesCaptured >= 18) {
+                    found = true;
                     break;
                 }
             }
-
-            if (found) {
-                new VehicleDetailsFrame(vehicleData.toString()); // Open the details frame
-                dispose(); // Close the FindVehicleFrame
-            } else {
-                JOptionPane.showMessageDialog(this, "No matching vehicle details found.", "Search Results", JOptionPane.INFORMATION_MESSAGE);
-            }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error reading the file: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error reading vehicle details: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (found) {
+            new VehicleDetailsFrame(vehicleData.toString());
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "No matching vehicle details found.", "Search Results", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }
