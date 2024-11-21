@@ -25,15 +25,17 @@ public class VehicleDetailsFrame extends JFrame {
 
         // Body panel
         JPanel bodyPanel = new JPanel();
-        bodyPanel.setLayout(new GridLayout(0, 1, 20, 20)); // Dynamic rows, 1 column
-        bodyPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 20)); // Shift text to the right
+        bodyPanel.setLayout(new BoxLayout(bodyPanel, BoxLayout.Y_AXIS)); // Use BoxLayout for flexible height
+        bodyPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50)); // Adjust left and right padding
 
         String[] details = vehicleData.split("\n");
         for (String detail : details) {
             if (!detail.trim().isEmpty()) {
                 JLabel label = new JLabel(detail.trim());
-                label.setFont(new Font("Serif", Font.BOLD, 20)); // Bold and bigger font
+                label.setFont(new Font("Serif", Font.PLAIN, 24)); // Larger font for better readability
+                label.setAlignmentX(Component.LEFT_ALIGNMENT);
                 bodyPanel.add(label);
+                bodyPanel.add(Box.createRigidArea(new Dimension(0, 15))); // Add space between labels
             }
         }
 
