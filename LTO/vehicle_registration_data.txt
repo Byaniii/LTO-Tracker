@@ -15,7 +15,7 @@ Insurance Validity Period: t
 Policy Number: t
 Vehicle Type: t
 Brand: t
-Dimensions: t
+Dimensions: tITEEEEE
 Name of Vehicle Owner: Igon Neski A. Dela Cruz
 Address: Rizal
 Contact Information: 0000

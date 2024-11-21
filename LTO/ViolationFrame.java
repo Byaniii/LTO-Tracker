@@ -2,28 +2,30 @@ package LTO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ViolationFrame extends frame {
     private ArrayList<JCheckBox> violationCheckboxes;
+    private String ownerName;
 
-    public ViolationFrame() {
+    public ViolationFrame(String ownerName) {
         super("Violation");
+        this.ownerName = ownerName;
         bodyPanel.setBackground(Color.WHITE);
         createViolationPanel();
     }
 
     private void createViolationPanel() {
-        setResizable(false);
         bodyPanel.removeAll();
 
-        // Header
         JLabel headerLabel = new JLabel("VIOLATION", SwingConstants.CENTER);
         headerLabel.setFont(new Font("Serif", Font.BOLD, 30));
         headerLabel.setBounds(600, 20, 300, 40);
         bodyPanel.add(headerLabel);
 
-        // Violations List
         String[] violations = {
                 "Not wearing a seatbelt", "Reckless Driving", "DUI", "Not Wearing A Helmet",
                 "Illegal Parking", "Distracted Driving", "Disregarding Traffic Sign",
@@ -42,45 +44,34 @@ public class ViolationFrame extends frame {
             bodyPanel.add(violationCheckBox);
             violationCheckboxes.add(violationCheckBox);
 
-            y += 40; // Space between rows
-            if (i == 5) { // Start second column
+            y += 40;
+            if (i == 5) {
                 x = 500;
                 y = 80;
             }
         }
 
-        // Main Menu Button (Bottom-Left)
-        CustomButton mainMenuButton = CustomButton.createRedButton("MAIN MENU", 100, 650, 200, 50, 20);
-        mainMenuButton.addActionListener(e -> {
-            new AdminFrame();
-            dispose();
-        });
-        bodyPanel.add(mainMenuButton);
-
-        // Enter Violation Button (Bottom-Right)
-        CustomButton enterViolationButton = CustomButton.createRedButton("ENTER VIOLATION", 1000, 650, 200, 50, 20);
-        enterViolationButton.addActionListener(e -> enterViolations());
-        bodyPanel.add(enterViolationButton);
+        CustomButton saveButton = CustomButton.createRedButton("SAVE VIOLATIONS", 550, 650, 200, 50, 20);
+        saveButton.addActionListener(e -> saveViolations());
+        bodyPanel.add(saveButton);
 
         bodyPanel.revalidate();
         bodyPanel.repaint();
     }
 
-    private void enterViolations() {
-        StringBuilder selectedViolations = new StringBuilder("Selected Violations:\n");
-        boolean hasSelection = false;
-
-        for (JCheckBox checkBox : violationCheckboxes) {
-            if (checkBox.isSelected()) {
-                selectedViolations.append("- ").append(checkBox.getText()).append("\n");
-                hasSelection = true;
+    private void saveViolations() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("violations.txt", true))) {
+            writer.write("Violations for: " + ownerName + "\n");
+            for (JCheckBox checkBox : violationCheckboxes) {
+                if (checkBox.isSelected()) {
+                    writer.write("- " + checkBox.getText() + "\n");
+                }
             }
-        }
-
-        if (hasSelection) {
-            JOptionPane.showMessageDialog(this, selectedViolations.toString(), "Violations", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "No violations selected.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            writer.write("\n");
+            JOptionPane.showMessageDialog(this, "Violations saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving violations: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
