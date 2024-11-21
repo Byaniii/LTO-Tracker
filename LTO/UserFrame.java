@@ -102,12 +102,15 @@ public class UserFrame extends JFrame {
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(400, 120)); // Increased size of the buttons
         button.setFont(new Font("Serif", Font.BOLD, 60)); // Increased font size
-        button.setBackground(Color.RED);
-        button.setForeground(Color.BLACK);
-        button.setFocusPainted(false);
+        button.setBackground(Color.RED); // Set background color to red
+        button.setOpaque(true); // Ensure the background color is visible
+        button.setBorderPainted(false); // Remove the default button border
+        button.setForeground(Color.WHITE); // Set text color to white for better contrast
+        button.setFocusPainted(false); // Remove focus border
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         return button;
     }
+
 
     // Inner class to handle button clicks
     private class ButtonClickListener implements ActionListener {
