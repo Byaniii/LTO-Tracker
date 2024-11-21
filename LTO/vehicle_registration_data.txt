@@ -1,0 +1,18 @@
+Name of Vehicle Owner: Vallejo, Elijah Vianey D.
+Address: test
+Contact Information: test
+Identification Number: test
+Date of Birth: test
+Email: test
+Vehicle Identification Number: test
+Registration Number: t
+Make and Model: t
+Body Type: t
+Color: t
+Weight: t
+Insurance Provider: t
+Insurance Validity Period: t
+Policy Number: t
+Vehicle Type: t
+Brand: t
+Dimensions: t

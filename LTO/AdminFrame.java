@@ -60,6 +60,7 @@ public class AdminFrame extends frame {
         CustomButton Violation = CustomButton.createRedButton("VIOLATION", 532, 414, 400, 63, 25);
         bodyPanel.add(Violation);
 
+
         // LOGOUT button
         CustomButton logoutButton = CustomButton.createRedButton("LOGOUT", 50, 50, 400, 120, 30); // Match size and style
         logoutButton.setFont(new Font("Serif", Font.BOLD, 30)); // Increased font size

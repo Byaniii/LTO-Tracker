@@ -79,7 +79,7 @@ public class FindVehicleFrame extends JFrame {
         boolean found = false;
         StringBuilder vehicleData = new StringBuilder();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\vival\\IdeaProjects\\LTO-Tracker\\LTO\\vehicle_registration_data.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("LTO/vehicle_registration_data.txt"))) {
             String line;
             boolean captureLines = false;
             int linesCaptured = 0;

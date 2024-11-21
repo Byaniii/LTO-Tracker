@@ -80,7 +80,7 @@ public class UserFrame extends JFrame {
 
     private String getVehicleOwnerName(String email) {
         String ownerName = "User"; // Default name
-        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\vival\\IdeaProjects\\LTO-Tracker\\LTO\\vehicle_registration_data.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("LTO/vehicle_registration_data.txt"))) {
             String line;
             String potentialOwnerName = ""; // To store the potential name before we find the email
 
@@ -103,7 +103,7 @@ public class UserFrame extends JFrame {
         button.setPreferredSize(new Dimension(400, 120)); // Increased size of the buttons
         button.setFont(new Font("Serif", Font.BOLD, 60)); // Increased font size
         button.setBackground(Color.RED);
-        button.setForeground(Color.WHITE);
+        button.setForeground(Color.BLACK);
         button.setFocusPainted(false);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         return button;
