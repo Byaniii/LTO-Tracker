@@ -16,3 +16,21 @@ Policy Number: t
 Vehicle Type: t
 Brand: t
 Dimensions: t
+Name of Vehicle Owner: Igon Neski A. Dela Cruz
+Address: Rizal
+Contact Information: 0000
+Identification Number: 0000
+Date of Birth: 2005/01/07
+Email: Igon
+Vehicle Identification Number: hihih
+Registration Number: ihih
+Make and Model: ihy8
+Body Type: 77878
+Color: 78787
+Weight: 8787878
+Insurance Provider: 7878
+Insurance Validity Period: 7887
+Policy Number: 7878787
+Vehicle Type: 87878
+Brand: 7878
+Dimensions: 7878

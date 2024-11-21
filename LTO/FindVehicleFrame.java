@@ -75,34 +75,47 @@ public class FindVehicleFrame extends JFrame {
     }
 
     private void searchVehicle() {
-        String ownerNameInput = OwnerName_Field.getText().trim();
+        String ownerNameInput = OwnerName_Field.getText().trim().toLowerCase();
         boolean found = false;
         StringBuilder vehicleData = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("LTO/vehicle_registration_data.txt"))) {
             String line;
+            String currentOwner = ""; // To store the current owner being checked
             boolean captureLines = false;
             int linesCaptured = 0;
 
             while ((line = reader.readLine()) != null) {
                 // Check if the line contains the owner's name
-                if (line.equalsIgnoreCase("Name of Vehicle Owner: " + ownerNameInput)) {
-                    captureLines = true; // Start capturing the next lines
-                    vehicleData.append(line).append("\n");
-                    linesCaptured++;
-                    continue;
+                if (line.startsWith("Name of Vehicle Owner: ")) {
+                    currentOwner = line.replace("Name of Vehicle Owner: ", "").trim();
+                    String[] nameParts = currentOwner.toLowerCase().split("\\s+");
+
+                    // Reset capturing and check for match using Levenshtein
+                    captureLines = false;
+                    linesCaptured = 0;
+
+                    for (String part : nameParts) {
+                        if (levenshteinDistance(part, ownerNameInput) <= 3) { // Match with Levenshtein distance
+                            captureLines = true;
+                            found = true;
+                            vehicleData.setLength(0); // Clear data for new match
+                            vehicleData.append(line).append("\n");
+                            break;
+                        }
+                    }
+                    continue; // Skip further processing for this line
                 }
 
-                // If we are capturing lines, add the current line
+                // If capturing lines, append the current line
                 if (captureLines && linesCaptured < 18) {
                     vehicleData.append(line).append("\n");
                     linesCaptured++;
                 }
 
-                // Stop capturing after 18 lines
+                // Stop capturing after capturing 18 lines
                 if (linesCaptured >= 18) {
-                    found = true;
-                    break;
+                    captureLines = false; // Reset capturing
                 }
             }
         } catch (IOException e) {
@@ -110,6 +123,7 @@ public class FindVehicleFrame extends JFrame {
             return;
         }
 
+        // Display results or show a "no match" message
         if (found) {
             new VehicleDetailsFrame(vehicleData.toString());
             dispose();
@@ -117,4 +131,27 @@ public class FindVehicleFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "No matching vehicle details found.", "Search Results", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
+    // Helper method for Levenshtein Distance
+    private int levenshteinDistance(String s1, String s2) {
+        int[][] dp = new int[s1.length() + 1][s2.length() + 1];
+
+        for (int i = 0; i <= s1.length(); i++) {
+            for (int j = 0; j <= s2.length(); j++) {
+                if (i == 0) {
+                    dp[i][j] = j;
+                } else if (j == 0) {
+                    dp[i][j] = i;
+                } else {
+                    dp[i][j] = Math.min(
+                            Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1),
+                            dp[i - 1][j - 1] + (s1.charAt(i - 1) == s2.charAt(j - 1) ? 0 : 1)
+                    );
+                }
+            }
+        }
+
+        return dp[s1.length()][s2.length()];
+    }
+
 }
