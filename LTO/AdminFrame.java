@@ -58,7 +58,12 @@ public class AdminFrame extends frame {
         bodyPanel.add(FindVehicle);
 
         CustomButton Violation = CustomButton.createRedButton("VIOLATION", 532, 414, 400, 63, 25);
+        Violation.addActionListener(e -> {
+            new ViolationFrame(); // Open ViolationFrame
+            dispose(); // Close the AdminFrame
+        });
         bodyPanel.add(Violation);
+
 
 
         // LOGOUT button

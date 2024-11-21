@@ -1,4 +1,4 @@
-Name of Vehicle Owner: Vallejo, Elijah Vianey D.
+Name of Vehicle Owner: jefmahniga
 Address: test
 Contact Information: test
 Identification Number: test
@@ -34,3 +34,21 @@ Policy Number: 7878787
 Vehicle Type: 87878
 Brand: 7878
 Dimensions: 7878
+Name of Vehicle Owner: jeffmahnigaelijah
+Address: 1
+Contact Information: 1
+Identification Number: 1
+Date of Birth: 1
+Email: 1
+Vehicle Identification Number: 1
+Registration Number: 1
+Make and Model: 1
+Body Type: 1
+Color: 1
+Weight: 1
+Insurance Provider: 1
+Insurance Validity Period: 1
+Policy Number: 1
+Vehicle Type: 1
+Brand: 1
+Dimensions: 1
