@@ -2,6 +2,9 @@ package LTO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class ViewDetails extends JFrame {
     private JPanel bodyPanel;
@@ -19,11 +22,7 @@ public class ViewDetails extends JFrame {
         topPanel.setPreferredSize(new Dimension(1500, 100));
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        // Logo and title
-        ImageIcon icon = new ImageIcon("logo.png");
-        JLabel logoLabel = new JLabel(icon);
-        topPanel.add(logoLabel);
-
+        // Title
         JLabel titleLabel = new JLabel("LTO TRACKER - " + viewType);
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
@@ -34,73 +33,94 @@ public class ViewDetails extends JFrame {
         // Body panel
         bodyPanel = new JPanel();
         bodyPanel.setBackground(Color.WHITE);
-        bodyPanel.setLayout(new BoxLayout(bodyPanel, BoxLayout.Y_AXIS));
+        bodyPanel.setLayout(null); // Using null layout for precise positioning
         add(bodyPanel, BorderLayout.CENTER);
 
         // Load the appropriate view based on viewType
-        switch (viewType) {
-            case "Profile":
-                loadProfileView();
-                break;
-            case "Vehicle Profile":
-                loadVehicleProfileView();
-                break;
-            case "Violations":
-                loadViolationsView();
-                break;
-            default:
-                showError("Invalid view type");
+        if ("Profile".equalsIgnoreCase(viewType)) {
+            loadProfileView();
         }
 
         // Add a "Back" button
         JButton backButton = new JButton("BACK");
-        backButton.setPreferredSize(new Dimension(200, 50));
+        backButton.setBounds(600, 750, 200, 50);
         backButton.setFont(new Font("Serif", Font.BOLD, 30));
         backButton.setBackground(Color.RED);
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
-        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backButton.addActionListener(e -> {
-            dispose(); // Close the current frame
-            new UserFrame(username); // Reopen the UserFrame
-        });
+        backButton.addActionListener(e -> dispose());
 
-        bodyPanel.add(Box.createRigidArea(new Dimension(0, 50))); // Add spacing
         bodyPanel.add(backButton);
 
         setVisible(true);
     }
 
     private void loadProfileView() {
-        JLabel label = new JLabel("Profile Information Here");
-        label.setFont(new Font("Serif", Font.BOLD, 40));
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bodyPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        bodyPanel.add(label);
-    }
+        bodyPanel.removeAll(); // Clear the panel
 
-    private void loadVehicleProfileView() {
-        JLabel label = new JLabel("Vehicle Profile Information Here");
-        label.setFont(new Font("Serif", Font.BOLD, 40));
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bodyPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        bodyPanel.add(label);
-    }
+        // Header
+        JLabel headerLabel = new JLabel("PROFILE INFORMATION");
+        headerLabel.setFont(new Font("Serif", Font.BOLD, 40));
+        headerLabel.setBounds(500, 20, 500, 50);
+        bodyPanel.add(headerLabel);
 
-    private void loadViolationsView() {
-        JLabel label = new JLabel("Violations Information Here");
-        label.setFont(new Font("Serif", Font.BOLD, 40));
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bodyPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        bodyPanel.add(label);
-    }
+        // File path (adjust as needed)
+        String filePath = "LTO/vehicle_registration_data.txt";
 
-    private void showError(String message) {
-        JLabel errorLabel = new JLabel(message);
-        errorLabel.setFont(new Font("Serif", Font.BOLD, 40));
-        errorLabel.setForeground(Color.RED);
-        errorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bodyPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        bodyPanel.add(errorLabel);
+        // List of fields to display
+        String[] allowedFields = {
+                "Name of Vehicle Owner",
+                "Address",
+                "Contact Information",
+                "Identification Number",
+                "Date of Birth"
+        };
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int y = 100; // Starting y-coordinate for placing elements
+
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue; // Skip empty lines
+
+                // Split line into key and value
+                int colonIndex = line.indexOf(":");
+                if (colonIndex != -1) {
+                    String key = line.substring(0, colonIndex).trim();
+                    String value = line.substring(colonIndex + 1).trim();
+
+                    // Display only allowed fields
+                    for (String allowedField : allowedFields) {
+                        if (key.equalsIgnoreCase(allowedField)) {
+                            // Add key as label
+                            JLabel keyLabel = new JLabel(key + ":");
+                            keyLabel.setFont(new Font("Serif", Font.BOLD, 20));
+                            keyLabel.setBounds(300, y, 300, 30);
+                            bodyPanel.add(keyLabel);
+
+                            // Add value as a text field
+                            JTextField valueField = new JTextField(value);
+                            valueField.setFont(new Font("Serif", Font.PLAIN, 20));
+                            valueField.setBounds(600, y, 600, 30);
+                            valueField.setEditable(false); // Make it read-only
+                            bodyPanel.add(valueField);
+
+                            y += 50; // Increment y-coordinate for the next row
+                            break; // Exit the loop once the field is added
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            JLabel errorLabel = new JLabel("Error reading file: " + e.getMessage());
+            errorLabel.setFont(new Font("Serif", Font.BOLD, 20));
+            errorLabel.setForeground(Color.RED);
+            errorLabel.setBounds(500, 100, 500, 50);
+            bodyPanel.add(errorLabel);
+        }
+
+        // Refresh the panel
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
     }
 }
