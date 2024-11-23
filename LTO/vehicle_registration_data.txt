@@ -1,13 +1,13 @@
-Name of Vehicle Owner: jefmahniga
-Address: test
+Name of Vehicle Owner: Igon Dela Cruz
+Address: Test
 Contact Information: test
 Identification Number: test
-Date of Birth: test
+Date of Birth: 11/24/2004
 Email: test
-Vehicle Identification Number: test
+Vehicle Identification Number: tt
 Registration Number: t
 Make and Model: t
-Body Type: t
+Body Type: tt
 Color: t
 Weight: t
 Insurance Provider: t
@@ -15,40 +15,4 @@ Insurance Validity Period: t
 Policy Number: t
 Vehicle Type: t
 Brand: t
-Dimensions: tITEEEEE
-Name of Vehicle Owner: Igon Neski A. Dela Cruz
-Address: Rizal
-Contact Information: 0000
-Identification Number: 0000
-Date of Birth: 2005/01/07
-Email: Igon
-Vehicle Identification Number: hihih
-Registration Number: ihih
-Make and Model: ihy8
-Body Type: 77878
-Color: 78787
-Weight: 8787878
-Insurance Provider: 7878
-Insurance Validity Period: 7887
-Policy Number: 7878787
-Vehicle Type: 87878
-Brand: 7878
-Dimensions: 7878
-Name of Vehicle Owner: jeffmahnigaelijah
-Address: 1
-Contact Information: 1
-Identification Number: 1
-Date of Birth: 1
-Email: 1
-Vehicle Identification Number: 1
-Registration Number: 1
-Make and Model: 1
-Body Type: 1
-Color: 1
-Weight: 1
-Insurance Provider: 1
-Insurance Validity Period: 1
-Policy Number: 1
-Vehicle Type: 1
-Brand: 1
-Dimensions: 1
+Dimensions: t

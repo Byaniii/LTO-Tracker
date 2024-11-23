@@ -101,6 +101,7 @@ public class ViolationFrame extends frame {
 
                 System.out.println("Record saved successfully: " + record);
                 dispose();
+                new FindVehicleFrame();
             }
         } catch (IOException e) {
             e.printStackTrace(); // Print stack trace to debug the issue
