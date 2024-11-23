@@ -97,6 +97,7 @@ public class FindVehicleFrame extends frame {
             displayViolations(); // Show violations if owner details are found
         } else {
             JOptionPane.showMessageDialog(this, "No matching vehicle details found.", "Search Results", JOptionPane.INFORMATION_MESSAGE);
+            detailsPanel.add(new JLabel("No matching vehicle details found."));
         }
 
         detailsPanel.revalidate();
@@ -160,7 +161,6 @@ public class FindVehicleFrame extends frame {
         }
     }
 
-
     private void openViolationPanel() {
         if (currentOwner != null && !currentOwner.isEmpty()) {
             new ViolationFrame(currentOwner); // Pass the current owner's name to the ViolationFrame
@@ -169,6 +169,4 @@ public class FindVehicleFrame extends frame {
             JOptionPane.showMessageDialog(this, "Search for an owner first before adding violations.", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }
-
-
 }

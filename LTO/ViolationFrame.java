@@ -60,34 +60,52 @@ public class ViolationFrame extends frame {
     }
 
     private void saveViolations() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/KuyaBani/IdeaProjects/LTO/LTO/violations.txt", true))) {
+        try {
+            // Define the file path
+            String filePath = "violations.txt"; // Use relative or absolute path as needed
+
+            // Debugging message to verify file path
+            System.out.println("Attempting to write to file: " + filePath);
+
+            // Ensure the parent directory exists (for absolute paths)
+            java.io.File file = new java.io.File(filePath);
+            java.io.File parentDir = file.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs(); // Create directories if they don't exist
+            }
+
             // Write owner's name and violations in a structured format
-            StringBuilder record = new StringBuilder();
-            record.append(ownerName).append("|"); // Owner name as the key
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+                StringBuilder record = new StringBuilder();
+                record.append(ownerName).append("|"); // Owner name as the key
 
-            boolean hasViolations = false;
-            for (JCheckBox checkBox : violationCheckboxes) {
-                if (checkBox.isSelected()) {
-                    if (hasViolations) {
-                        record.append(","); // Separate multiple violations
+                boolean hasViolations = false;
+                for (JCheckBox checkBox : violationCheckboxes) {
+                    if (checkBox.isSelected()) {
+                        if (hasViolations) {
+                            record.append(","); // Separate multiple violations
+                        }
+                        record.append(checkBox.getText());
+                        hasViolations = true;
                     }
-                    record.append(checkBox.getText());
-                    hasViolations = true;
                 }
-            }
 
-            // Check if any violation was selected
-            if (hasViolations) {
-                writer.write(record.toString());
-                writer.newLine();
-                JOptionPane.showMessageDialog(this, "Violations saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "No violations selected.", "Info", JOptionPane.INFORMATION_MESSAGE);
-            }
+                // Check if any violation was selected
+                if (hasViolations) {
+                    writer.write(record.toString());
+                    writer.newLine();
+                    JOptionPane.showMessageDialog(this, "Violations saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No violations selected.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                }
 
-            dispose();
+                System.out.println("Record saved successfully: " + record);
+                dispose();
+            }
         } catch (IOException e) {
+            e.printStackTrace(); // Print stack trace to debug the issue
             JOptionPane.showMessageDialog(this, "Error saving violations: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 }
