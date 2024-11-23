@@ -60,15 +60,31 @@ public class ViolationFrame extends frame {
     }
 
     private void saveViolations() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("violations.txt", true))) {
-            writer.write("Violations for: " + ownerName + "\n");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/KuyaBani/IdeaProjects/LTO/LTO/violations.txt", true))) {
+            // Write owner's name and violations in a structured format
+            StringBuilder record = new StringBuilder();
+            record.append(ownerName).append("|"); // Owner name as the key
+
+            boolean hasViolations = false;
             for (JCheckBox checkBox : violationCheckboxes) {
                 if (checkBox.isSelected()) {
-                    writer.write("- " + checkBox.getText() + "\n");
+                    if (hasViolations) {
+                        record.append(","); // Separate multiple violations
+                    }
+                    record.append(checkBox.getText());
+                    hasViolations = true;
                 }
             }
-            writer.write("\n");
-            JOptionPane.showMessageDialog(this, "Violations saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            // Check if any violation was selected
+            if (hasViolations) {
+                writer.write(record.toString());
+                writer.newLine();
+                JOptionPane.showMessageDialog(this, "Violations saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "No violations selected.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            }
+
             dispose();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error saving violations: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
