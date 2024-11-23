@@ -55,7 +55,6 @@ public class ViewDetails extends JFrame {
 
         add(footerPanel, BorderLayout.SOUTH);
 
-        // Load the Profile Details
         loadProfileView();
         setVisible(true);
     }
