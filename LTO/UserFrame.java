@@ -57,6 +57,7 @@ public class UserFrame extends JFrame {
         String[] buttonTexts = {"Profile", "Violations", "Vehicle Profile"};
         for (String text : buttonTexts) {
             JButton button = createButton(text);
+            button.setFont(new Font("Arial", Font.BOLD, 50));
             button.addActionListener(new ButtonClickListener(text)); // Pass button text to listener
             bodyPanel.add(button);
             bodyPanel.add(Box.createRigidArea(new Dimension(0, 60))); // Add more spacing between buttons
@@ -153,7 +154,9 @@ public class UserFrame extends JFrame {
             String dateOfBirth = getDateOfBirth(email);
 
             if (buttonText.equalsIgnoreCase("Violations")) {
-                new ViewDetails("Violations", ownerName, dateOfBirth, UserFrame.this).loadViolationsView(ownerName); // Call the new method
+                new ViewDetails("Violations", ownerName, dateOfBirth, UserFrame.this).loadViolationsView(ownerName);
+            } else if (buttonText.equalsIgnoreCase("Vehicle Profile")) {
+                new ViewDetails("Vehicle Profile", ownerName, dateOfBirth, UserFrame.this).loadVehicleProfileView(ownerName);
             } else {
                 new ViewDetails(buttonText, ownerName, dateOfBirth, UserFrame.this);
             }
@@ -161,5 +164,7 @@ public class UserFrame extends JFrame {
             setVisible(false); // Hide the UserFrame temporarily
         }
     }
+
+
 }
 
