@@ -2,105 +2,126 @@ package LTO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class ViewDetails extends JFrame {
     private JPanel bodyPanel;
 
     public ViewDetails(String viewType, String username) {
         setTitle("LTO Tracker - " + viewType);
-        setSize(1500, 900);
+        setSize(1400, 900);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Top panel with title
-        JPanel topPanel = new JPanel();
-        topPanel.setBackground(Color.RED);
-        topPanel.setPreferredSize(new Dimension(1500, 100));
-        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        // Header Panel
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(Color.RED);
+        headerPanel.setPreferredSize(new Dimension(1400, 100));
+        JLabel headerLabel = new JLabel("PROFILE DETAILS", SwingConstants.CENTER);
+        headerLabel.setForeground(Color.WHITE);
+        headerLabel.setFont(new Font("Serif", Font.BOLD, 40));
+        headerPanel.add(headerLabel);
+        add(headerPanel, BorderLayout.NORTH);
 
-        // Logo and title
-        ImageIcon icon = new ImageIcon("logo.png");
-        JLabel logoLabel = new JLabel(icon);
-        topPanel.add(logoLabel);
-
-        JLabel titleLabel = new JLabel("LTO TRACKER - " + viewType);
-        titleLabel.setForeground(Color.WHITE);
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 24));
-        topPanel.add(titleLabel);
-
-        add(topPanel, BorderLayout.NORTH);
-
-        // Body panel
+        // Body Panel
         bodyPanel = new JPanel();
+        bodyPanel.setLayout(null); // Manual positioning for precise control
         bodyPanel.setBackground(Color.WHITE);
-        bodyPanel.setLayout(new BoxLayout(bodyPanel, BoxLayout.Y_AXIS));
         add(bodyPanel, BorderLayout.CENTER);
 
-        // Load the appropriate view based on viewType
-        switch (viewType) {
-            case "Profile":
-                loadProfileView();
-                break;
-            case "Vehicle Profile":
-                loadVehicleProfileView();
-                break;
-            case "Violations":
-                loadViolationsView();
-                break;
-            default:
-                showError("Invalid view type");
-        }
+        // Footer Panel with Buttons
+        JPanel footerPanel = new JPanel();
+        footerPanel.setBackground(Color.WHITE);
+        footerPanel.setPreferredSize(new Dimension(1400, 100));
+        footerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
 
-        // Add a "Back" button
-        JButton backButton = new JButton("BACK");
-        backButton.setPreferredSize(new Dimension(200, 50));
-        backButton.setFont(new Font("Serif", Font.BOLD, 30));
-        backButton.setBackground(Color.RED);
-        backButton.setForeground(Color.WHITE);
-        backButton.setFocusPainted(false);
-        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backButton.addActionListener(e -> {
-            dispose(); // Close the current frame
-            new UserFrame(username); // Reopen the UserFrame
+        // "Main Menu" Button
+        JButton mainMenuButton = new JButton("MAIN MENU");
+        mainMenuButton.setPreferredSize(new Dimension(250, 60)); // Consistent button size
+        mainMenuButton.setFont(new Font("Serif", Font.BOLD, 30));
+        mainMenuButton.setBackground(Color.RED); // Set red background
+        mainMenuButton.setForeground(Color.WHITE); // White font color
+        mainMenuButton.setOpaque(true); // Ensure background color is visible
+        mainMenuButton.setBorderPainted(false); // Remove default border
+        mainMenuButton.setFocusPainted(false);
+        mainMenuButton.addActionListener(e -> {
+            new UserFrame(username); // Navigate back to UserFrame
+            dispose();
         });
+        footerPanel.add(mainMenuButton);
 
-        bodyPanel.add(Box.createRigidArea(new Dimension(0, 50))); // Add spacing
-        bodyPanel.add(backButton);
+        add(footerPanel, BorderLayout.SOUTH);
 
+        loadProfileView();
         setVisible(true);
     }
 
     private void loadProfileView() {
-        JLabel label = new JLabel("Profile Information Here");
-        label.setFont(new Font("Serif", Font.BOLD, 40));
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bodyPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        bodyPanel.add(label);
-    }
+        bodyPanel.removeAll(); // Clear previous data
 
-    private void loadVehicleProfileView() {
-        JLabel label = new JLabel("Vehicle Profile Information Here");
-        label.setFont(new Font("Serif", Font.BOLD, 40));
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bodyPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        bodyPanel.add(label);
-    }
+        // Header in Body
+        JLabel profileHeader = new JLabel("Profile Information:");
+        profileHeader.setFont(new Font("Serif", Font.BOLD, 30));
+        profileHeader.setBounds(50, 20, 500, 40); // Positioning
+        bodyPanel.add(profileHeader);
 
-    private void loadViolationsView() {
-        JLabel label = new JLabel("Violations Information Here");
-        label.setFont(new Font("Serif", Font.BOLD, 40));
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bodyPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        bodyPanel.add(label);
-    }
+        // File path for reading data
+        String filePath = "LTO/vehicle_registration_data.txt";
 
-    private void showError(String message) {
-        JLabel errorLabel = new JLabel(message);
-        errorLabel.setFont(new Font("Serif", Font.BOLD, 40));
-        errorLabel.setForeground(Color.RED);
-        errorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bodyPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-        bodyPanel.add(errorLabel);
+        // Allowed fields for display
+        String[] allowedFields = {
+                "Name of Vehicle Owner",
+                "Address",
+                "Contact Information",
+                "Identification Number",
+                "Date of Birth"
+        };
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int y = 80; // Starting y-coordinate for details
+
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue; // Skip empty lines
+
+                int colonIndex = line.indexOf(":");
+                if (colonIndex != -1) {
+                    String key = line.substring(0, colonIndex).trim();
+                    String value = line.substring(colonIndex + 1).trim();
+
+                    // Display only allowed fields
+                    for (String allowedField : allowedFields) {
+                        if (key.equalsIgnoreCase(allowedField)) {
+                            JLabel keyLabel = new JLabel(key + ":");
+                            keyLabel.setFont(new Font("Serif", Font.BOLD, 20));
+                            keyLabel.setBounds(50, y, 300, 30); // Adjust positioning
+                            bodyPanel.add(keyLabel);
+
+                            JTextField valueField = new JTextField(value);
+                            valueField.setFont(new Font("Serif", Font.PLAIN, 20));
+                            valueField.setBounds(400, y, 800, 30); // Align value fields
+                            valueField.setEditable(false); // Read-only
+                            bodyPanel.add(valueField);
+
+                            y += 50; // Increment y-coordinate for the next field
+                            break; // Exit loop after adding the field
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            JLabel errorLabel = new JLabel("Error reading file: " + e.getMessage());
+            errorLabel.setFont(new Font("Serif", Font.BOLD, 20));
+            errorLabel.setForeground(Color.RED);
+            errorLabel.setBounds(50, 100, 800, 30); // Position the error label
+            bodyPanel.add(errorLabel);
+        }
+
+        // Refresh the panel
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
     }
 }
