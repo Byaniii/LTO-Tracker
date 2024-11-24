@@ -31,6 +31,26 @@ public class ViolationFrame extends frame {
                 "Operating a defective vehicle"
         };
 
+        // Load existing violations for the owner
+        java.util.Set<String> existingViolations = new java.util.HashSet<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("violations.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith(ownerName + "|")) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length > 1) {
+                        for (String violation : parts[1].split(",")) {
+                            existingViolations.add(violation.trim());
+                        }
+                    }
+                    break; // Exit loop once the owner's record is found
+                }
+            }
+        } catch (IOException e) {
+            // File not found or other errors, handle silently
+        }
+
+        // Create checkboxes and check them if they are in the existing violations
         violationCheckboxes = new ArrayList<>();
         int x = 100, y = 80, colWidth = 300;
 
@@ -39,6 +59,12 @@ public class ViolationFrame extends frame {
             violationCheckBox.setFont(new Font("Serif", Font.PLAIN, 20));
             violationCheckBox.setBackground(Color.WHITE);
             violationCheckBox.setBounds(x, y, colWidth, 30);
+
+            // Check the box if the violation is in the existing violations
+            if (existingViolations.contains(violations[i])) {
+                violationCheckBox.setSelected(true);
+            }
+
             bodyPanel.add(violationCheckBox);
             violationCheckboxes.add(violationCheckBox);
 
@@ -57,6 +83,7 @@ public class ViolationFrame extends frame {
         bodyPanel.repaint();
     }
 
+
     private void saveViolations() {
         try {
             // Define file path
@@ -73,28 +100,22 @@ public class ViolationFrame extends frame {
                     if (line.startsWith(ownerName + "|")) {
                         ownerFound = true;
 
-                        // Extract existing violations
-                        String[] parts = line.split("\\|");
-                        String existingViolations = parts.length > 1 ? parts[1] : "";
-
-                        // Create a Set to avoid duplicate violations
+                        // Create a Set to store only checked violations
                         java.util.Set<String> violationSet = new java.util.HashSet<>();
-                        for (String violation : existingViolations.split(",")) {
-                            violationSet.add(violation.trim());
-                        }
-
-                        // Add new violations
                         for (JCheckBox checkBox : violationCheckboxes) {
                             if (checkBox.isSelected()) {
                                 violationSet.add(checkBox.getText());
                             }
                         }
 
-                        // Rebuild the line with updated violations
-                        StringBuilder updatedLine = new StringBuilder();
-                        updatedLine.append(ownerName).append("|");
-                        updatedLine.append(String.join(",", violationSet));
-                        fileContent.add(updatedLine.toString());
+                        // Rebuild the line with updated violations (only checked ones)
+                        if (!violationSet.isEmpty()) {
+                            StringBuilder updatedLine = new StringBuilder();
+                            updatedLine.append(ownerName).append("|");
+                            updatedLine.append(String.join(",", violationSet));
+                            fileContent.add(updatedLine.toString());
+                        }
+                        // If all violations are unchecked, do not add an entry for the owner
                     } else {
                         fileContent.add(line); // Keep other entries intact
                     }
@@ -103,7 +124,7 @@ public class ViolationFrame extends frame {
                 // If the file doesn't exist, that's fine; we'll create a new one
             }
 
-            // If the owner was not found, add a new entry
+            // If the owner was not found and there are selected violations, add a new entry
             if (!ownerFound) {
                 StringBuilder newEntry = new StringBuilder();
                 newEntry.append(ownerName).append("|");
