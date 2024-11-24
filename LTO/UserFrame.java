@@ -57,6 +57,7 @@ public class UserFrame extends JFrame {
         String[] buttonTexts = {"Profile", "Violations", "Vehicle Profile"};
         for (String text : buttonTexts) {
             JButton button = createButton(text);
+            button.setFont(new Font("Arial", Font.BOLD, 50));
             button.addActionListener(new ButtonClickListener(text)); // Pass button text to listener
             bodyPanel.add(button);
             bodyPanel.add(Box.createRigidArea(new Dimension(0, 60))); // Add more spacing between buttons

@@ -59,9 +59,8 @@ public class AdminFrame extends frame {
 
 
         // LOGOUT button
-        CustomButton logoutButton = CustomButton.createRedButton("LOGOUT", 50, 50, 400, 120, 30); // Match size and style
-        logoutButton.setFont(new Font("Serif", Font.BOLD, 30)); // Increased font size
-        logoutButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        CustomButton logoutButton = CustomButton.createRedButton("LOGOUT", 50, 50, 400, 120, 28); // Match size and style
+        logoutButton.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
         logoutButton.addActionListener(e -> {
             dispose(); // Close the current AdminFrame
             main.main(null); // Redirect to the main frame (home page)

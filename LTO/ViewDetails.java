@@ -22,7 +22,7 @@ public class ViewDetails extends JFrame {
         headerPanel.setPreferredSize(new Dimension(1400, 100));
         JLabel headerLabel = new JLabel("PROFILE DETAILS", SwingConstants.CENTER);
         headerLabel.setForeground(Color.WHITE);
-        headerLabel.setFont(new Font("Serif", Font.BOLD, 40));
+        headerLabel.setFont(new Font("Arial", Font.BOLD, 40));
         headerPanel.add(headerLabel);
         add(headerPanel, BorderLayout.NORTH);
 
@@ -41,7 +41,7 @@ public class ViewDetails extends JFrame {
         // "Main Menu" Button
         JButton mainMenuButton = new JButton("MAIN MENU");
         mainMenuButton.setPreferredSize(new Dimension(250, 60)); // Consistent button size
-        mainMenuButton.setFont(new Font("Serif", Font.BOLD, 30));
+        mainMenuButton.setFont(new Font("Arial", Font.BOLD, 30));
         mainMenuButton.setBackground(Color.RED); // Set red background
         mainMenuButton.setForeground(Color.WHITE); // White font color
         mainMenuButton.setOpaque(true); // Ensure background color is visible
