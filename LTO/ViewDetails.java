@@ -223,6 +223,103 @@ public class ViewDetails extends JFrame {
 
 
 
+    public void loadVehicleProfileView(String ownerName) {
+        bodyPanel.removeAll(); // Clear previous data
+
+        // Header in Body
+        JLabel headerLabel = new JLabel("Vehicle Profile:");
+        headerLabel.setFont(new Font("Serif", Font.BOLD, 30));
+        headerLabel.setBounds(50, 20, 500, 40);
+        bodyPanel.add(headerLabel);
+
+        // File path for reading data
+        String filePath = "LTO/vehicle_registration_data.txt";
+
+        // Fields to be displayed
+        String[] vehicleFields = {
+                "Vehicle Identification Number",
+                "Registration Number",
+                "Make and Model",
+                "Body Type",
+                "Color",
+                "Weight",
+                "Insurance Provider",
+                "Insurance Validity Period",
+                "Policy Number",
+                "Vehicle Type",
+                "Brand",
+                "Dimensions"
+        };
+
+        boolean isMatchingUser = false; // Flag to track if user matches
+        int y = 80; // Starting y-coordinate for details
+        String key = ""; // Declare key outside the loop
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            System.out.println("DEBUG: Searching vehicle profile for owner -> " + ownerName);
+
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue; // Skip empty lines
+
+                // Check if the line matches the owner's name
+                if (line.startsWith("Name of Vehicle Owner: ")) {
+                    String currentOwner = line.replace("Name of Vehicle Owner: ", "").trim();
+                    isMatchingUser = currentOwner.equalsIgnoreCase(ownerName.trim());
+                    System.out.println("DEBUG: Owner match found -> " + currentOwner);
+                    continue;
+                }
+
+                // If the owner matches, display the relevant fields
+                if (isMatchingUser) {
+                    int colonIndex = line.indexOf(":");
+                    if (colonIndex != -1) {
+                        key = line.substring(0, colonIndex).trim();
+                        String value = line.substring(colonIndex + 1).trim();
+
+                        // Check if the current key is a vehicle field to display
+                        for (String field : vehicleFields) {
+                            if (key.equalsIgnoreCase(field)) {
+                                JLabel keyLabel = new JLabel(key + ":");
+                                keyLabel.setFont(new Font("Serif", Font.BOLD, 20));
+                                keyLabel.setBounds(50, y, 300, 30);
+                                bodyPanel.add(keyLabel);
+
+                                JTextField valueField = new JTextField(value);
+                                valueField.setFont(new Font("Serif", Font.PLAIN, 20));
+                                valueField.setBounds(400, y, 800, 30);
+                                valueField.setEditable(false);
+                                bodyPanel.add(valueField);
+
+                                y += 50; // Increment y-coordinate for the next field
+                                break;
+                            }
+                        }
+                    }
+
+                    // Stop once "Dimensions" field is processed
+                    if (key.equalsIgnoreCase("Dimensions")) {
+                        isMatchingUser = false; // Reset flag for next user
+                        break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            JLabel errorLabel = new JLabel("Error reading file: " + e.getMessage());
+            errorLabel.setFont(new Font("Serif", Font.BOLD, 20));
+            errorLabel.setForeground(Color.RED);
+            errorLabel.setBounds(50, y, 800, 30);
+            bodyPanel.add(errorLabel);
+        }
+
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+    }
+
+
+
+
 
 
 }
