@@ -84,23 +84,27 @@ public class UserFrame extends JFrame {
 
     private String getVehicleOwnerName(String email) {
         String ownerName = "User"; // Default name
+        String potentialOwnerName = null; // To temporarily store the owner name
         try (BufferedReader reader = new BufferedReader(new FileReader("LTO/vehicle_registration_data.txt"))) {
             String line;
-            String potentialOwnerName = ""; // To store the potential name before we find the email
-
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("Name of Vehicle Owner: ")) {
+                    // Store the potential owner name
                     potentialOwnerName = line.replace("Name of Vehicle Owner: ", "").trim();
-                } else if (line.contains("Email: " + email)) {
+                    System.out.println("DEBUG: Found potentialOwnerName -> " + potentialOwnerName);
+                } else if (line.contains("Email: " + email) && potentialOwnerName != null) {
+                    // If the email matches, use the stored potentialOwnerName
                     ownerName = potentialOwnerName;
+                    System.out.println("DEBUG: Email match found. ownerName set to -> " + ownerName);
                     break;
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("DEBUG: Error reading vehicle_registration_data.txt -> " + e.getMessage());
         }
         return ownerName;
     }
+
 
     private String getDateOfBirth(String email) {
         String dateOfBirth = ""; // Default to empty
@@ -145,12 +149,15 @@ public class UserFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Fetch additional data
             String ownerName = getVehicleOwnerName(email);
             String dateOfBirth = getDateOfBirth(email);
 
-            // Pass this instance (UserFrame) to ViewDetails
-            new ViewDetails(buttonText, ownerName, dateOfBirth, UserFrame.this);
+            if (buttonText.equalsIgnoreCase("Violations")) {
+                new ViewDetails("Violations", ownerName, dateOfBirth, UserFrame.this).loadViolationsView(ownerName); // Call the new method
+            } else {
+                new ViewDetails(buttonText, ownerName, dateOfBirth, UserFrame.this);
+            }
+
             setVisible(false); // Hide the UserFrame temporarily
         }
     }
