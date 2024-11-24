@@ -9,7 +9,6 @@ import java.io.IOException;
 public class FindVehicleFrame extends frame {
     private CustomTextField OwnerName_Field;
     private JPanel detailsPanel;
-    private JPanel violationsPanel;
     private String currentOwner; // To hold the current owner's name
 
     public FindVehicleFrame() {
@@ -47,13 +46,6 @@ public class FindVehicleFrame extends frame {
         detailsPanel.setBounds(300, 200, 900, 300); // Centered horizontally
         bodyPanel.add(detailsPanel);
 
-        // Violations Panel
-        violationsPanel = new JPanel();
-        violationsPanel.setLayout(new BoxLayout(violationsPanel, BoxLayout.Y_AXIS)); // Vertical layout
-        violationsPanel.setBackground(Color.WHITE);
-        violationsPanel.setBounds(300, 520, 900, 200); // Centered horizontally
-        bodyPanel.add(violationsPanel);
-
         // Main Menu Button
         CustomButton mainMenuButton = CustomButton.createRedButton("MAIN MENU", 50, 650, 200, 50, 20);
         mainMenuButton.addActionListener(e -> {
@@ -62,10 +54,15 @@ public class FindVehicleFrame extends frame {
         });
         bodyPanel.add(mainMenuButton);
 
-        // Violation Button
-        CustomButton violationButton = CustomButton.createRedButton("VIOLATION", 1050, 650, 200, 50, 20); // Bottom-right corner
-        violationButton.addActionListener(e -> openViolationPanel());
-        bodyPanel.add(violationButton);
+        // Enter Violation Button
+        CustomButton enterViolationButton = CustomButton.createRedButton("ENTER VIOLATION", 550, 650, 200, 50, 20);
+        enterViolationButton.addActionListener(e -> openViolationPanel());
+        bodyPanel.add(enterViolationButton);
+
+        // View Violation Button
+        CustomButton viewViolationButton = CustomButton.createRedButton("VIEW VIOLATION", 800, 650, 200, 50, 20);
+        viewViolationButton.addActionListener(e -> viewViolations());
+        bodyPanel.add(viewViolationButton);
 
         bodyPanel.revalidate();
         bodyPanel.repaint();
@@ -74,7 +71,6 @@ public class FindVehicleFrame extends frame {
     private void searchVehicle() {
         String ownerNameInput = OwnerName_Field.getText().trim().toLowerCase();
         detailsPanel.removeAll(); // Clear previous details
-        violationsPanel.removeAll(); // Clear previous violations
         boolean found = false;
 
         try (BufferedReader reader = new BufferedReader(new FileReader("LTO/vehicle_registration_data.txt"))) {
@@ -93,17 +89,13 @@ public class FindVehicleFrame extends frame {
             JOptionPane.showMessageDialog(this, "Error reading vehicle details: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        if (found) {
-            displayViolations(); // Show violations if owner details are found
-        } else {
+        if (!found) {
             JOptionPane.showMessageDialog(this, "No matching vehicle details found.", "Search Results", JOptionPane.INFORMATION_MESSAGE);
             detailsPanel.add(new JLabel("No matching vehicle details found."));
         }
 
         detailsPanel.revalidate();
         detailsPanel.repaint();
-        violationsPanel.revalidate();
-        violationsPanel.repaint();
     }
 
     private void displayOwnerDetails(BufferedReader reader) throws IOException {
@@ -131,42 +123,20 @@ public class FindVehicleFrame extends frame {
         }
     }
 
-    private void displayViolations() {
-        boolean foundViolations = false;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader("violations.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Match the owner's name with the currentOwner
-                if (line.startsWith(currentOwner + "|")) {
-                    foundViolations = true;
-                    String[] violations = line.split("\\|")[1].split(","); // Extract violations
-                    violationsPanel.add(new JLabel("Violations for: " + currentOwner));
-                    violationsPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add spacing
-
-                    for (String violation : violations) {
-                        JLabel violationLabel = new JLabel("- " + violation.trim());
-                        violationLabel.setFont(new Font("Serif", Font.PLAIN, 18));
-                        violationsPanel.add(violationLabel);
-                    }
-                    break;
-                }
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error reading violations: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        if (!foundViolations) {
-            violationsPanel.add(new JLabel("No violations found for " + currentOwner));
-        }
-    }
-
     private void openViolationPanel() {
         if (currentOwner != null && !currentOwner.isEmpty()) {
-            new ViolationFrame(currentOwner); // Pass the current owner's name to the ViolationFrame
+            new ViolationFrame(currentOwner); // Open the existing ViolationFrame
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Search for an owner first before adding violations.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void viewViolations() {
+        if (currentOwner != null && !currentOwner.isEmpty()) {
+            new ViewViolationFrame(currentOwner); // Open the new ViewViolationFrame
+        } else {
+            JOptionPane.showMessageDialog(this, "Search for an owner first before viewing violations.", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }
 }

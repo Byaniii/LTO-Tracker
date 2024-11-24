@@ -1,2 +1,2 @@
 Igon Dela Cruz|Not wearing a seatbelt,Operating a defective vehicle
-elijah vianey vallejo|Not wearing a seatbelt
+elijah vianey vallejo|Smoking inside the vehicle,Not wearing a seatbelt,Illegal Parking,Reckless Driving,Operating a defective vehicle,DUI,Distracted Driving,Overloading,Not Wearing A Helmet,Disregarding Traffic Sign,Illegal turn
