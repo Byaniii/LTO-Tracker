@@ -2,9 +2,7 @@ package LTO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class ViolationFrame extends frame {
@@ -61,50 +59,85 @@ public class ViolationFrame extends frame {
 
     private void saveViolations() {
         try {
-            // Define the file path
-            String filePath = "violations.txt"; // Use relative or absolute path as needed
+            // Define file path
+            String filePath = "violations.txt";
 
-            // Debugging message to verify file path
-            System.out.println("Attempting to write to file: " + filePath);
+            // Read the current file content
+            java.util.List<String> fileContent = new ArrayList<>();
+            boolean ownerFound = false;
 
-            // Ensure the parent directory exists (for absolute paths)
-            java.io.File file = new java.io.File(filePath);
-            java.io.File parentDir = file.getParentFile();
-            if (parentDir != null && !parentDir.exists()) {
-                parentDir.mkdirs(); // Create directories if they don't exist
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Check if the line corresponds to the current owner
+                    if (line.startsWith(ownerName + "|")) {
+                        ownerFound = true;
+
+                        // Extract existing violations
+                        String[] parts = line.split("\\|");
+                        String existingViolations = parts.length > 1 ? parts[1] : "";
+
+                        // Create a Set to avoid duplicate violations
+                        java.util.Set<String> violationSet = new java.util.HashSet<>();
+                        for (String violation : existingViolations.split(",")) {
+                            violationSet.add(violation.trim());
+                        }
+
+                        // Add new violations
+                        for (JCheckBox checkBox : violationCheckboxes) {
+                            if (checkBox.isSelected()) {
+                                violationSet.add(checkBox.getText());
+                            }
+                        }
+
+                        // Rebuild the line with updated violations
+                        StringBuilder updatedLine = new StringBuilder();
+                        updatedLine.append(ownerName).append("|");
+                        updatedLine.append(String.join(",", violationSet));
+                        fileContent.add(updatedLine.toString());
+                    } else {
+                        fileContent.add(line); // Keep other entries intact
+                    }
+                }
+            } catch (IOException e) {
+                // If the file doesn't exist, that's fine; we'll create a new one
             }
 
-            // Write owner's name and violations in a structured format
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-                StringBuilder record = new StringBuilder();
-                record.append(ownerName).append("|"); // Owner name as the key
+            // If the owner was not found, add a new entry
+            if (!ownerFound) {
+                StringBuilder newEntry = new StringBuilder();
+                newEntry.append(ownerName).append("|");
 
                 boolean hasViolations = false;
                 for (JCheckBox checkBox : violationCheckboxes) {
                     if (checkBox.isSelected()) {
                         if (hasViolations) {
-                            record.append(","); // Separate multiple violations
+                            newEntry.append(",");
                         }
-                        record.append(checkBox.getText());
+                        newEntry.append(checkBox.getText());
                         hasViolations = true;
                     }
                 }
 
-                // Check if any violation was selected
                 if (hasViolations) {
-                    writer.write(record.toString());
-                    writer.newLine();
-                    JOptionPane.showMessageDialog(this, "Violations saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "No violations selected.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    fileContent.add(newEntry.toString());
                 }
-
-                System.out.println("Record saved successfully: " + record);
-                dispose();
-                new FindVehicleFrame();
             }
+
+            // Write back the updated file content
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
+                for (String line : fileContent) {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            }
+
+            JOptionPane.showMessageDialog(this, "Violations saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            new FindVehicleFrame();
+
         } catch (IOException e) {
-            e.printStackTrace(); // Print stack trace to debug the issue
+            e.printStackTrace(); // Debugging
             JOptionPane.showMessageDialog(this, "Error saving violations: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

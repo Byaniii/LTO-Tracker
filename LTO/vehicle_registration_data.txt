@@ -16,3 +16,21 @@ Policy Number: t
 Vehicle Type: t
 Brand: t
 Dimensions: t
+Name of Vehicle Owner: elijah vianey vallejo
+Address: quezon
+Contact Information: test
+Identification Number: test
+Date of Birth: 11/24/2004
+Email: vallejo
+Vehicle Identification Number: t
+Registration Number: t
+Make and Model: t
+Body Type: t
+Color: t
+Weight: t
+Insurance Provider: t
+Insurance Validity Period: t
+Policy Number: t
+Vehicle Type: t
+Brand: t
+Dimensions: t
