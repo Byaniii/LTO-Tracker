@@ -9,7 +9,7 @@ import java.io.IOException;
 public class ViewDetails extends JFrame {
     private JPanel bodyPanel;
 
-    public ViewDetails(String viewType, String username) {
+    public ViewDetails(String viewType, String username, String dateOfBirth, UserFrame userFrame) {
         setTitle("LTO Tracker - " + viewType);
         setSize(1400, 900);
         setLocationRelativeTo(null);
@@ -48,30 +48,31 @@ public class ViewDetails extends JFrame {
         mainMenuButton.setBorderPainted(false); // Remove default border
         mainMenuButton.setFocusPainted(false);
         mainMenuButton.addActionListener(e -> {
-            new UserFrame(username); // Navigate back to UserFrame
-            dispose();
+            userFrame.setVisible(true); // Re-show the UserFrame
+            dispose(); // Close the current ViewDetails frame
         });
         footerPanel.add(mainMenuButton);
 
         add(footerPanel, BorderLayout.SOUTH);
 
-        loadProfileView();
+        // Load the profile view
+        loadProfileView(username, dateOfBirth);
         setVisible(true);
     }
 
-    private void loadProfileView() {
+    private void loadProfileView(String username, String dateOfBirth) {
         bodyPanel.removeAll(); // Clear previous data
 
         // Header in Body
         JLabel profileHeader = new JLabel("Profile Information:");
         profileHeader.setFont(new Font("Serif", Font.BOLD, 30));
-        profileHeader.setBounds(50, 20, 500, 40); // Positioning
+        profileHeader.setBounds(50, 20, 500, 40);
         bodyPanel.add(profileHeader);
 
         // File path for reading data
         String filePath = "LTO/vehicle_registration_data.txt";
 
-        // Allowed fields for display
+        // Allowed fields for display (up to Date of Birth)
         String[] allowedFields = {
                 "Name of Vehicle Owner",
                 "Address",
@@ -80,43 +81,71 @@ public class ViewDetails extends JFrame {
                 "Date of Birth"
         };
 
+        boolean isMatchingUser = false; // Flag to track if user is matched
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             int y = 80; // Starting y-coordinate for details
 
+            System.out.println("DEBUG: Start reading file...");
+
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) continue; // Skip empty lines
+
+                System.out.println("DEBUG: Line read -> " + line);
 
                 int colonIndex = line.indexOf(":");
                 if (colonIndex != -1) {
                     String key = line.substring(0, colonIndex).trim();
                     String value = line.substring(colonIndex + 1).trim();
 
-                    // Display only allowed fields
-                    for (String allowedField : allowedFields) {
-                        if (key.equalsIgnoreCase(allowedField)) {
-                            JLabel keyLabel = new JLabel(key + ":");
-                            keyLabel.setFont(new Font("Serif", Font.BOLD, 20));
-                            keyLabel.setBounds(50, y, 300, 30); // Adjust positioning
-                            bodyPanel.add(keyLabel);
-
-                            JTextField valueField = new JTextField(value);
-                            valueField.setFont(new Font("Serif", Font.PLAIN, 20));
-                            valueField.setBounds(400, y, 800, 30); // Align value fields
-                            valueField.setEditable(false); // Read-only
-                            bodyPanel.add(valueField);
-
-                            y += 50; // Increment y-coordinate for the next field
-                            break; // Exit loop after adding the field
+                    // Check if the current section matches the username and DOB
+                    if (key.equalsIgnoreCase("Name of Vehicle Owner") && value.equalsIgnoreCase(username.trim())) {
+                        isMatchingUser = true; // Set flag for matching name
+                        System.out.println("DEBUG: Name match found for -> " + value);
+                    } else if (isMatchingUser && key.equalsIgnoreCase("Date of Birth")) {
+                        if (!value.equalsIgnoreCase(dateOfBirth.trim())) {
+                            isMatchingUser = false; // Reset flag if DOB does not match
+                            break; // Exit since the profile does not match
                         }
                     }
+
+                    // If matching user, display allowed fields
+                    if (isMatchingUser) {
+                        for (String allowedField : allowedFields) {
+                            if (key.equalsIgnoreCase(allowedField)) {
+                                JLabel keyLabel = new JLabel(key + ":");
+                                keyLabel.setFont(new Font("Serif", Font.BOLD, 20));
+                                keyLabel.setBounds(50, y, 300, 30);
+                                bodyPanel.add(keyLabel);
+
+                                JTextField valueField = new JTextField(value);
+                                valueField.setFont(new Font("Serif", Font.PLAIN, 20));
+                                valueField.setBounds(400, y, 800, 30);
+                                valueField.setEditable(false);
+                                bodyPanel.add(valueField);
+
+                                y += 50; // Increment y-coordinate for the next field
+
+                                // Stop after Date of Birth is added
+                                if (key.equalsIgnoreCase("Date of Birth")) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Stop processing further once the user's section is complete
+                if (isMatchingUser && line.trim().isEmpty()) {
+                    break;
                 }
             }
         } catch (IOException e) {
             JLabel errorLabel = new JLabel("Error reading file: " + e.getMessage());
             errorLabel.setFont(new Font("Serif", Font.BOLD, 20));
             errorLabel.setForeground(Color.RED);
-            errorLabel.setBounds(50, 100, 800, 30); // Position the error label
+            errorLabel.setBounds(50, 100, 800, 30);
             bodyPanel.add(errorLabel);
         }
 

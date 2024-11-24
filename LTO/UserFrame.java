@@ -1,15 +1,19 @@
 package LTO;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import javax.swing.*;
 
 public class UserFrame extends JFrame {
+    private String email; // Store user email to retain data
+
     public UserFrame(String email) {
+        this.email = email;
+
         // Frame setup
         setTitle("LTO Tracker - User Panel");
         setSize(1500, 900);
@@ -53,7 +57,7 @@ public class UserFrame extends JFrame {
         String[] buttonTexts = {"Profile", "Violations", "Vehicle Profile"};
         for (String text : buttonTexts) {
             JButton button = createButton(text);
-            button.addActionListener((ActionListener) new ButtonClickListener(text, email)); // Pass email to the listener
+            button.addActionListener(new ButtonClickListener(text)); // Pass button text to listener
             bodyPanel.add(button);
             bodyPanel.add(Box.createRigidArea(new Dimension(0, 60))); // Add more spacing between buttons
         }
@@ -98,6 +102,26 @@ public class UserFrame extends JFrame {
         return ownerName;
     }
 
+    private String getDateOfBirth(String email) {
+        String dateOfBirth = ""; // Default to empty
+        try (BufferedReader reader = new BufferedReader(new FileReader("LTO/vehicle_registration_data.txt"))) {
+            String line;
+            boolean isMatchingUser = false;
+
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("Email: " + email)) {
+                    isMatchingUser = true; // Email matches
+                } else if (isMatchingUser && line.startsWith("Date of Birth: ")) {
+                    dateOfBirth = line.replace("Date of Birth: ", "").trim();
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dateOfBirth;
+    }
+
     private JButton createButton(String text) {
         JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(400, 120)); // Increased size of the buttons
@@ -111,21 +135,24 @@ public class UserFrame extends JFrame {
         return button;
     }
 
-
     // Inner class to handle button clicks
     private class ButtonClickListener implements ActionListener {
         private final String buttonText;
-        private final String email;
 
-        public ButtonClickListener(String buttonText, String email) {
+        public ButtonClickListener(String buttonText) {
             this.buttonText = buttonText;
-            this.email = email;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            dispose();
-            new ViewDetails(buttonText, email); // Pass email to ViewDetails
+            // Fetch additional data
+            String ownerName = getVehicleOwnerName(email);
+            String dateOfBirth = getDateOfBirth(email);
+
+            // Pass this instance (UserFrame) to ViewDetails
+            new ViewDetails(buttonText, ownerName, dateOfBirth, UserFrame.this);
+            setVisible(false); // Hide the UserFrame temporarily
         }
     }
 }
+
