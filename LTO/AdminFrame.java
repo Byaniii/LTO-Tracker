@@ -185,7 +185,7 @@ public class AdminFrame extends frame {
         });
         bodyPanel.add(nextButton);
 
-        CustomButton backButton = CustomButton.createRedButton("BACK", 50, 604, 150, 50, 24);
+        CustomButton backButton = CustomButton.createRedButton("BACK", 1000, 570, 150, 50, 30);
         backButton.addActionListener(e -> adminPanel());
         bodyPanel.add(backButton);
 
