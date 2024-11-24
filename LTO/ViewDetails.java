@@ -153,4 +153,76 @@ public class ViewDetails extends JFrame {
         bodyPanel.revalidate();
         bodyPanel.repaint();
     }
+
+
+
+
+    public void loadViolationsView(String ownerName) {
+        bodyPanel.removeAll(); // Clear previous data
+
+        // Header in Body
+        JLabel headerLabel = new JLabel("Violations:");
+        headerLabel.setFont(new Font("Serif", Font.BOLD, 30));
+        headerLabel.setBounds(50, 20, 500, 40);
+        bodyPanel.add(headerLabel);
+
+        // Extract the first name from ownerName
+        String firstName = ownerName.split(" ")[0].trim().toLowerCase();
+
+        // File path for reading violations
+        String filePath = "violations.txt";
+        int y = 80; // Starting y-coordinate for listing violations
+
+        System.out.println("DEBUG: Searching for violations for ownerName -> " + ownerName);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean found = false;
+
+            while ((line = reader.readLine()) != null) {
+                System.out.println("DEBUG: Read line -> " + line);
+
+                // Check for matches based on the first name
+                String[] parts = line.split("\\|");
+                if (parts.length > 1 && parts[0].toLowerCase().contains(firstName)) {
+                    found = true;
+                    System.out.println("DEBUG: Match found for -> " + parts[0]);
+
+                    // Extract and display violations
+                    String[] violations = parts[1].split(",");
+                    for (String violation : violations) {
+                        JLabel violationLabel = new JLabel(violation.trim());
+                        violationLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+                        violationLabel.setBounds(50, y, 800, 30);
+                        bodyPanel.add(violationLabel);
+                        y += 40; // Increment y-coordinate for the next violation
+                    }
+                    break; // Exit loop after displaying violations for the owner
+                }
+            }
+
+            if (!found) {
+                System.out.println("DEBUG: No violations found for -> " + ownerName);
+                JLabel noViolationsLabel = new JLabel("No violations found for this owner.");
+                noViolationsLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+                noViolationsLabel.setBounds(50, y, 800, 30);
+                bodyPanel.add(noViolationsLabel);
+            }
+        } catch (IOException e) {
+            System.err.println("DEBUG: Error reading file -> " + e.getMessage());
+            JLabel errorLabel = new JLabel("Error reading file: " + e.getMessage());
+            errorLabel.setFont(new Font("Serif", Font.BOLD, 20));
+            errorLabel.setForeground(Color.RED);
+            errorLabel.setBounds(50, y, 800, 30);
+            bodyPanel.add(errorLabel);
+        }
+
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+    }
+
+
+
+
+
 }
