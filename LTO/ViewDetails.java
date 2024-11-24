@@ -315,6 +315,7 @@ public class ViewDetails extends JFrame {
 
         bodyPanel.revalidate();
         bodyPanel.repaint();
+
     }
 
 
