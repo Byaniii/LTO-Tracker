@@ -1,7 +1,7 @@
 Name of Vehicle Owner: Igon Neski A Dela Cruz
-Address: Rizal
+Address: 1065 Dalig Mejorada St. Batingan Binangonan Rizal
 Contact Information: 09690484182
-Identification Number: 0000000000
+Identification Number: 0109565438322930
 Date of Birth: 01/07/2005
 Email: Igon@gmail.com
 Vehicle Identification Number: 999
@@ -34,3 +34,27 @@ Policy Number: yb769
 Vehicle Type: nn7n5b
 Brand: 5br5br767
 Dimensions: b5r5b
+Name of Vehicle Owner: Joey Capistrano
+Address: Manila City
+Contact Information: 0977854321
+Identification Number: 00-11-22-33
+Date of Birth: 01/02/2003
+Email: Joey@gmail.com
+Vehicle Identification Number: 00-11-9966
+Registration Number: 86784743221100
+Make and Model: Toyota, Corolla
+Body Type: Sedan
+Color: White
+Weight: 1,310 kg
+Insurance Provider: Progressive
+Insurance Validity Period: 2024-12-31
+Policy Number: 123456789
+Vehicle Type: Passenger Car
+Brand: Toyota
+Dimensions: 4630x1780x1355 mm
+Name of Vehicle Owner: User
+Address: Binangonan Rizal
+Contact Information: 09690593421
+Identification Number: 0123456789
+Date of Birth: 00/01/2005
+Email: User@gmail.com

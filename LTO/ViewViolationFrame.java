@@ -73,5 +73,7 @@ public class ViewViolationFrame extends frame {
 
         revalidate();
         repaint();
+
+
     }
 }

@@ -196,7 +196,7 @@ public class AdminFrame extends frame {
     private void Register_Next() {
         bodyPanel.removeAll();
 
-        JLabel titleLabel = new JLabel("Vehicle Registration - Vehicle Details");
+        JLabel titleLabel = new JLabel("Vehicle Registration");
         titleLabel.setFont(new Font("Serif", Font.BOLD, 32));
         titleLabel.setBounds(600, 20, 400, 40);
         bodyPanel.add(titleLabel);
@@ -338,7 +338,7 @@ public class AdminFrame extends frame {
         bodyPanel.add(Dimensions_Field);
 
         // Add a "Finish" button
-        CustomButton finishButton = CustomButton.createRedButton("FINISH", 1195, 604, 150, 50, 24);
+        CustomButton finishButton = CustomButton.createRedButton("FINISH", 1195, 650, 150, 50, 24);
         finishButton.addActionListener(e -> {
             if (VehicleIdentificationNumber_Field.getText().isEmpty() || RegistrationNumber_Field.getText().isEmpty() ||
                     MakeAndModel_Field.getText().isEmpty() || BodyType_Field.getText().isEmpty() ||
@@ -369,7 +369,7 @@ public class AdminFrame extends frame {
         });
         bodyPanel.add(finishButton);
 
-        CustomButton backButton = CustomButton.createRedButton("BACK", 50, 604, 150, 50, 24);
+        CustomButton backButton = CustomButton.createRedButton("BACK", 108, 650, 150, 50, 24);
         backButton.addActionListener(e -> Register());
         bodyPanel.add(backButton);
 

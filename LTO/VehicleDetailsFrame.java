@@ -76,5 +76,6 @@ public class VehicleDetailsFrame extends JFrame {
         add(footerPanel, BorderLayout.SOUTH);
 
         setVisible(true); // Moved to the end
+
     }
 }
