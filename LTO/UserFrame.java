@@ -163,6 +163,7 @@ public class UserFrame extends JFrame {
 
             setVisible(false); // Hide the UserFrame temporarily
         }
+
     }
 
 
